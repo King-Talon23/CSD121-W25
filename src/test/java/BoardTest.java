@@ -108,6 +108,14 @@ class BoardTest {
         assertEquals(expected, board.toString());
     }
 
-
+    @Test
+    void testSubtleBug() {
+        // test for diagonal bug
+        Board board = new Board();
+        board.placeX(new Position(topRow, leftCol));
+        board.placeX(new Position(midRow, midCOl));
+        board.placeX(new Position(botRow, rightCol));
+        assertEquals(Board.Status.XWins, board.getStatus());
+    }
 }
 
