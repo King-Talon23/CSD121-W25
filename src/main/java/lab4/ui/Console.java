@@ -1,7 +1,10 @@
 package lab4.ui;
 
+import com.diogonunes.jcolor.Ansi;
+import com.diogonunes.jcolor.Attribute;
 import lab4.game.*;
 
+import javax.swing.*;
 import java.util.Scanner;
 
 /**
@@ -9,12 +12,18 @@ import java.util.Scanner;
  */
 public class Console {
 
+    static Attribute redText = Attribute.TEXT_COLOR(255, 0, 0);
+    static Attribute whiteText = Attribute.TEXT_COLOR(255, 255, 255);
+
+    static Attribute bold = Attribute.BOLD();
+
     public static void println(String message) {
         System.out.println(message);
     }
 
     /**
      * Prompt the user for input using the given promptMessage
+     *
      * @param promptMessage The message to prompt the user with
      * @return The user's response
      */
@@ -26,6 +35,7 @@ public class Console {
 
     /**
      * Display the given game board
+     *
      * @param board A tictactoe game board
      */
     public static void showBoard(Board board) {
@@ -35,28 +45,31 @@ public class Console {
     /**
      * Repeatedly prompt the user for a position on which to place their next token.
      * If they enter an invalid response or an already-taken position they are re-prompted.
+     *
      * @param prompt The prompt to display to the user
-     * @param board The current state of the game board
+     * @param board  The current state of the game board
      * @return The position selected by the user
      */
     public static Position promptForPosition(String prompt, Board board) {
 
 
         var scanner = new Scanner(System.in);
-        final String helpMessage = "Input must be in the format 'row column', e.g., '1 2' or 't m' for the top middle cell.";
+        // made help message bold
+       final String helpMessage = Ansi.colorize("\nInput must be in the format 'row column'\ne.g., " +
+               "'1 2' or 't m' for the top middle cell.\n",whiteText, bold);
 
-        while ( true ) {
+        while (true) {
             System.out.print(prompt);
             var input = scanner.nextLine().trim();
 
-            if ( input.length() != 3 ) {
+            if (input.length() != 3) {
                 System.out.println(helpMessage);
                 continue;
             }
 
             var parts = input.split(" ");
 
-            if ( parts.length != 2 ) {
+            if (parts.length != 2) {
                 System.out.println(helpMessage);
                 continue;
             }
@@ -67,12 +80,14 @@ public class Console {
                 var pos = new Position(Row.from(parts[0]), Col.from(parts[1]));
 
                 if (board.isOccupiedAt(pos)) {
-                    System.out.println("That position is already taken.");
+                    // made text red and bold, also added extra newline so its never touching other text
+                    String alreadyTaken = Ansi.colorize("\nThat position is already taken.\n", redText, bold);
+                    System.out.println(alreadyTaken);
                     continue;
                 }
 
                 return pos;
-            } catch ( IllegalArgumentException e ) {
+            } catch (IllegalArgumentException e) {
                 System.out.println(helpMessage);
             }
         }

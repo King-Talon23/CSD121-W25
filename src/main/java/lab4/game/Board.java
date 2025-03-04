@@ -91,9 +91,11 @@ public class Board {
             }
         }
         // Check the diagonals
+        // diagonal is incorrectly returning [0][2] and not [0][0] for left to right diagonals
         if (board[0][0] != null && board[0][0] == board[1][1] && board[1][1] == board[2][2]) {
-            return board[0][2];
+            return board[0][0];
         }
+        // this one is correct
         if (board[0][2] != null && board[0][2] == board[1][1] && board[1][1] == board[2][0]) {
             return board[0][2];
         }

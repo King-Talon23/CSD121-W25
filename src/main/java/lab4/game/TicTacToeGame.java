@@ -1,5 +1,7 @@
 package lab4.game;
 
+import com.diogonunes.jcolor.Attribute;
+
 import static lab4.game.Board.Status.InProgress;
 
 /**
@@ -41,6 +43,8 @@ public class TicTacToeGame {
     public void doNextTurn(Position pos) {
 
         if (board.isOccupiedAt(pos)) {
+
+
             throw new IllegalArgumentException("Position %s is already taken".formatted(pos));
         }
 
