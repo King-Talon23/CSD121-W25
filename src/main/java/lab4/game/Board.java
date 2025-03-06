@@ -2,7 +2,8 @@ package lab4.game;
 
 import static lab4.game.Board.PlayerToken.O;
 import static lab4.game.Board.PlayerToken.X;
-
+import static com.diogonunes.jcolor.Ansi.*;
+import static com.diogonunes.jcolor.Attribute.*;
 /**
  * Represents a TicTacToe game board
  */
@@ -11,12 +12,12 @@ public class Board {
     /**
      * A data type to represent each token on the board
      */
-    public static enum PlayerToken { X, O }
+    public static enum PlayerToken {X, O}
 
     /**
      * Represents the high-level status of the game board
      */
-    public static enum Status { InProgress, Draw, XWins, OWins }
+    public static enum Status {InProgress, Draw, XWins, OWins}
 
     /**
      * The current game board state
@@ -39,8 +40,10 @@ public class Board {
      */
     public Status getStatus() {
         switch (this.getWinner()) {
-            case X: return Status.XWins;
-            case O: return Status.OWins;
+            case X:
+                return Status.XWins;
+            case O:
+                return Status.OWins;
             case null: {
                 if (this.isFull()) {
                     return Status.Draw;
@@ -92,7 +95,7 @@ public class Board {
         }
         // Check the diagonals
         if (board[0][0] != null && board[0][0] == board[1][1] && board[1][1] == board[2][2]) {
-            return board[0][2];
+            return board[0][0];
         }
         if (board[0][2] != null && board[0][2] == board[1][1] && board[1][1] == board[2][0]) {
             return board[0][2];
@@ -124,14 +127,17 @@ public class Board {
 
     /**
      * Places an X token on the game board at the given position
+     *
      * @param pos A game board position
      */
     public void placeX(Position pos) {
+
         board[rowIdx(pos)][colIdx(pos)] = X;
     }
 
     /**
      * Places an O token on the game board at the given position
+     *
      * @param pos A game board position
      */
     public void placeO(Position pos) {
@@ -140,20 +146,30 @@ public class Board {
 
     /**
      * @return A 3x3 string representation of the game board
-     *         E.g.
-     *               .XO
-     *               .X.
-     *               O..
+     * E.g.
+     * .XO
+     * .X.
+     * O..
      */
     @Override
     public String toString() {
         var boardString = new StringBuilder();
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                boardString.append(board[i][j] == null ? '.' : board[i][j]);
+                if (board[i][j] == null) {
+                    boardString.append(colorize(".", TEXT_COLOR(200, 200, 200),BLACK_BACK()));
+                } else if (board[i][j] == PlayerToken.X) {
+                    boardString.append(colorize("X", TEXT_COLOR(255, 165, 0),BLACK_BACK()));
+                } else if (board[i][j] == PlayerToken.O) {
+                    boardString.append(colorize("O", TEXT_COLOR(0, 0, 255),BLACK_BACK()));
+                }
             }
-            boardString.append("\n");
+                boardString.append("\n");
+            }
+            return boardString.toString();
         }
-        return boardString.toString();
     }
-}
+
+
+
+

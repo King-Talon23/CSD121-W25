@@ -1,0 +1,1 @@
+The only external resources I used for this assignment were some forum posts on stackoverflow such as this https://stackoverflow.com/questions/14652538/remove-ascii-color-codesas well as the lecture slides

@@ -4,6 +4,8 @@ import lab4.game.*;
 
 import java.util.Scanner;
 
+import static com.diogonunes.jcolor.Ansi.*;
+import static com.diogonunes.jcolor.Attribute.*;
 /**
  * Helper methods for doing console-based user interaction
  */
@@ -19,7 +21,7 @@ public class Console {
      * @return The user's response
      */
     public static String prompt(String promptMessage) {
-        System.out.print(promptMessage);
+        System.out.print(colorize(promptMessage, GREEN_TEXT(),BLACK_BACK()));
         var scanner = new Scanner(System.in);
         return scanner.nextLine();
     }
@@ -43,10 +45,11 @@ public class Console {
 
 
         var scanner = new Scanner(System.in);
-        final String helpMessage = "Input must be in the format 'row column', e.g., '1 2' or 't m' for the top middle cell.";
+        final String helpMe = "Input must be in the format 'row column', e.g., '1 2' or 't m' for the top middle cell.";
+        final String helpMessage = colorize(helpMe, RED_TEXT(),BLACK_BACK());
 
         while ( true ) {
-            System.out.print(prompt);
+            System.out.print(colorize(prompt, GREEN_TEXT(),BLACK_BACK()));
             var input = scanner.nextLine().trim();
 
             if ( input.length() != 3 ) {
