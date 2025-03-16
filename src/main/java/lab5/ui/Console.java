@@ -1,13 +1,12 @@
-package tictactoe.ui;
+package lab5.ui;
 
-import com.diogonunes.jcolor.AnsiFormat;
-import tictactoe.game.*;
-import tictactoe.players.*;
+import lab5.game.PlayerToken;
+import lab5.players.HumanPlayer;
+import lab5.game.*;
+import lab5.players.*;
 
 import java.util.Scanner;
 
-import static com.diogonunes.jcolor.Ansi.colorize;
-import static com.diogonunes.jcolor.Attribute.*;
 
 public class Console {
 
@@ -41,10 +40,11 @@ public class Console {
     /**
      * Repeatedly prompt the user to select a player for the given token
      * until the select a valid one of a set of valid players
+     *
      * @param whichPlayer The player for which to prompt
      * @return A player object representing the user's chosen player
      */
-    public static Player promptForPlayer(PlayerToken whichPlayer) {
+    public static HumanPlayer promptForPlayer(PlayerToken whichPlayer) {
 
         while ( true ) {
             var input = prompt(fPrompt.format("Who will play " + whichPlayer + "? "));
@@ -58,7 +58,7 @@ public class Console {
                     default -> printAlert("TODO: Implement computer players");
                 }
             } else {
-                return new Player(input);
+                return new lab5.players.HumanPlayer(input);
             }
         }
     }
