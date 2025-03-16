@@ -3,8 +3,8 @@ package lab5.game;
 import lab5.game.TicTacToeGame;
 import lab5.ui.Console;
 
-import static tictactoe.game.PlayerToken.O;
-import static tictactoe.game.PlayerToken.X;
+import static lab5.game.PlayerToken.O;
+import static lab5.game.PlayerToken.X;
 
 public class Main {
 

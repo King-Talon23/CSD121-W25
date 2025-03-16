@@ -1,11 +1,15 @@
 package lab5.ui;
 
+import com.diogonunes.jcolor.*;
 import lab5.game.PlayerToken;
 import lab5.players.HumanPlayer;
 import lab5.game.*;
 import lab5.players.*;
 
 import java.util.Scanner;
+
+import static com.diogonunes.jcolor.Ansi.*;
+import static com.diogonunes.jcolor.Attribute.*;
 
 
 public class Console {
