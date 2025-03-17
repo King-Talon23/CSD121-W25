@@ -48,7 +48,7 @@ public class Console {
      * @param whichPlayer The player for which to prompt
      * @return A player object representing the user's chosen player
      */
-    public static HumanPlayer promptForPlayer(PlayerToken whichPlayer) {
+    public static Player promptForPlayer(PlayerToken whichPlayer) {
 
         while ( true ) {
             var input = prompt(fPrompt.format("Who will play " + whichPlayer + "? "));
@@ -58,7 +58,7 @@ public class Console {
 
                 switch ( input ) {
                     // E.g.
-                    // case "randy" -> { return new Randy(); }
+                    case "randy" -> { return new Randy("Randy"); }
                     default -> printAlert("TODO: Implement computer players");
                 }
             } else {
