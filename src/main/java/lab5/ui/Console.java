@@ -2,6 +2,7 @@ package lab5.ui;
 
 import com.diogonunes.jcolor.*;
 import lab5.game.PlayerToken;
+import lab5.players.HumanPlayer;
 import lab5.game.*;
 import lab5.players.*;
 
@@ -56,10 +57,8 @@ public class Console {
                 input = input.substring(1).toLowerCase(); // remove the '@' prefix
 
                 switch ( input ) {
-
-                    case "circe" -> {
-                        return new Circe("Circe");
-                    }
+                    // E.g.
+                    case "randy" -> { return new Randy("Randy"); }
                     default -> printAlert("TODO: Implement computer players");
                 }
             } else {
