@@ -15,7 +15,12 @@ public class Main {
                 Players can be human or computer.  When prompted for player names use one of the following:
                 - To play as a human, just enter a name
                 - To have the player played by the computer enter @ followed by one of the following names:
-                  - TODO: Add the names of the computer players you have implemented here!
+                Robots:
+                [Easy] Circe
+                [Easy] Linus
+                [Intermediate] Randy
+                [Hard] Omola
+                [Impossible] Optimus
                 """);
         var player1 = Console.promptForPlayer(X);
         var player2 = Console.promptForPlayer(O);

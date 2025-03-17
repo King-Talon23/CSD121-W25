@@ -5,22 +5,22 @@ import lab5.game.Position;
 
 import java.util.*;
 
-public class Circe extends Player {
-    String currentPos = "m m";
+public class Linus extends Player {
+    String currentPos = "t l";
     static Map<String, String> moveOrder = new HashMap<>();
     static {
-        moveOrder.put("m m", "t m");
+        moveOrder.put("t l", "t m");
         moveOrder.put("t m", "t r");
-        moveOrder.put("t r", "m r");
-        moveOrder.put("m r", "b r");
-        moveOrder.put("b r", "b m");
-        moveOrder.put("b m", "b l");
-        moveOrder.put("b l", "m l");
-        moveOrder.put("m l", "t l");
-        moveOrder.put("t l", "d d"); // done&done case
+        moveOrder.put("t r", "m l");
+        moveOrder.put("m l", "m m");
+        moveOrder.put("m m", "m r");
+        moveOrder.put("m r", "b l");
+        moveOrder.put("b l", "b m");
+        moveOrder.put("b m", "b r");
+        moveOrder.put("b r", "d d"); // done&done case
     }
 
-    public Circe(String name) {
+    public Linus(String name) {
         super(name);
     }
 
@@ -44,3 +44,4 @@ public class Circe extends Player {
 
     }
 }
+
