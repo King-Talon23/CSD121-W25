@@ -1,4 +1,4 @@
-package lab5.game;
+package lab5;
 
 import lab5.game.TicTacToeGame;
 import lab5.ui.Console;

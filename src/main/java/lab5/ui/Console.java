@@ -2,7 +2,6 @@ package lab5.ui;
 
 import com.diogonunes.jcolor.*;
 import lab5.game.PlayerToken;
-import lab5.players.HumanPlayer;
 import lab5.game.*;
 import lab5.players.*;
 
@@ -48,7 +47,7 @@ public class Console {
      * @param whichPlayer The player for which to prompt
      * @return A player object representing the user's chosen player
      */
-    public static HumanPlayer promptForPlayer(PlayerToken whichPlayer) {
+    public static Player promptForPlayer(PlayerToken whichPlayer) {
 
         while ( true ) {
             var input = prompt(fPrompt.format("Who will play " + whichPlayer + "? "));
@@ -57,8 +56,10 @@ public class Console {
                 input = input.substring(1).toLowerCase(); // remove the '@' prefix
 
                 switch ( input ) {
-                    // E.g.
-                    // case "randy" -> { return new Randy(); }
+
+                    case "circe" -> {
+                        return new Circe("Circe");
+                    }
                     default -> printAlert("TODO: Implement computer players");
                 }
             } else {
