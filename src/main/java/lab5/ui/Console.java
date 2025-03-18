@@ -2,9 +2,9 @@ package lab5.ui;
 
 import com.diogonunes.jcolor.*;
 import lab5.game.PlayerToken;
-import lab5.players.HumanPlayer;
 import lab5.game.*;
 import lab5.players.*;
+import lab5.players.Circe;
 
 import java.util.Scanner;
 

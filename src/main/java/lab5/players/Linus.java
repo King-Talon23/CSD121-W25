@@ -5,19 +5,19 @@ import lab5.game.Position;
 
 import java.util.*;
 
-public class Linus extends Player {
-    String currentPos = "t l";
-    static Map<String, String> moveOrder = new HashMap<>();
+public class Linus extends Player implements Player.hasSetMoves{
+    Position currentMove = topLeft;
+    static Map<Position, Position> moveOrder = new HashMap<>();
     static {
-        moveOrder.put("t l", "t m");
-        moveOrder.put("t m", "t r");
-        moveOrder.put("t r", "m l");
-        moveOrder.put("m l", "m m");
-        moveOrder.put("m m", "m r");
-        moveOrder.put("m r", "b l");
-        moveOrder.put("b l", "b m");
-        moveOrder.put("b m", "b r");
-        moveOrder.put("b r", "d d"); // done&done case
+        moveOrder.put(topLeft, topMid);
+        moveOrder.put(topMid, topRight);
+        moveOrder.put(topRight, midLeft);
+        moveOrder.put(midLeft, midMid);
+        moveOrder.put(midMid, midRight);
+        moveOrder.put(midRight, botLeft);
+        moveOrder.put(botLeft, botMid);
+        moveOrder.put(botMid, botRight);
+        moveOrder.put(botRight, null);
     }
 
     public Linus(String name) {
@@ -26,17 +26,11 @@ public class Linus extends Player {
 
     @Override
     public Position pickNextMove(Board board) {
-
-        for (String i = currentPos; !Objects.equals(i, "d d"); i = moveOrder.get(i)) {
-            Position position = Position.parse(i);
-            if (board.isEmptyAt(position)) {
-                currentPos = i; // save current position
-                return position;
-            }
-        }
-        return null;
+        Position move = findNextMove(currentMove, moveOrder, board);
+        // start checking what is the next move in sequence next turn
+        currentMove = moveOrder.get(move);
+        return move;
     }
-
 
 
     @Override

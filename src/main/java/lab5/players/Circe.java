@@ -1,23 +1,25 @@
 package lab5.players;
 
 import lab5.game.Board;
+import lab5.game.Col;
 import lab5.game.Position;
+import lab5.game.Row;
 
 import java.util.*;
 
-public class Circe extends Player {
-    String currentPos = "m m";
-    static Map<String, String> moveOrder = new HashMap<>();
+public class Circe extends Player implements Player.hasSetMoves {
+    Position currentMove = midMid;
+    static Map<Position, Position> moveOrder = new HashMap<>();
     static {
-        moveOrder.put("m m", "t m");
-        moveOrder.put("t m", "t r");
-        moveOrder.put("t r", "m r");
-        moveOrder.put("m r", "b r");
-        moveOrder.put("b r", "b m");
-        moveOrder.put("b m", "b l");
-        moveOrder.put("b l", "m l");
-        moveOrder.put("m l", "t l");
-        moveOrder.put("t l", "d d"); // done&done case
+        moveOrder.put(midMid, topMid);
+        moveOrder.put(topMid, topRight);
+        moveOrder.put(topRight, midRight);
+        moveOrder.put(midRight, botRight);
+        moveOrder.put(botRight, botMid);
+        moveOrder.put(botMid, botLeft);
+        moveOrder.put(botLeft, midLeft);
+        moveOrder.put(midLeft, topLeft);
+        moveOrder.put(topLeft, null);
     }
 
     public Circe(String name) {
@@ -26,17 +28,11 @@ public class Circe extends Player {
 
     @Override
     public Position pickNextMove(Board board) {
-
-        for (String i = currentPos; !Objects.equals(i, "d d"); i = moveOrder.get(i)) {
-            Position position = Position.parse(i);
-            if (board.isEmptyAt(position)) {
-                currentPos = i; // save current position
-                return position;
-            }
-        }
-        return null;
+        Position move = findNextMove(currentMove, moveOrder, board);
+        // start checking what is the next move in sequence next turn
+        currentMove = moveOrder.get(move);
+        return move;
     }
-
 
 
     @Override
