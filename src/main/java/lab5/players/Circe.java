@@ -1,26 +1,24 @@
 package lab5.players;
 
 import lab5.game.Board;
-import lab5.game.Col;
 import lab5.game.Position;
-import lab5.game.Row;
+import lab5.players.Player.*;
 
 import java.util.*;
 
-public class Circe extends Player implements Player.hasSetMoves {
+public class Circe extends Player implements hasSetMoves {
     Position currentMove = midMid;
-    static Map<Position, Position> moveOrder = new HashMap<>();
-    static {
-        moveOrder.put(midMid, topMid);
-        moveOrder.put(topMid, topRight);
-        moveOrder.put(topRight, midRight);
-        moveOrder.put(midRight, botRight);
-        moveOrder.put(botRight, botMid);
-        moveOrder.put(botMid, botLeft);
-        moveOrder.put(botLeft, midLeft);
-        moveOrder.put(midLeft, topLeft);
-        moveOrder.put(topLeft, null);
-    }
+    static final Map<Position, Position> moveOrder = Map.of(
+            midMid, topMid,
+            topMid, topRight,
+            topRight, midRight,
+            midRight, botRight,
+            botRight, botMid,
+            botMid, botLeft,
+            botLeft, midLeft,
+            midLeft, topLeft
+    );
+
 
     public Circe(String name) {
         super(name);
@@ -29,8 +27,7 @@ public class Circe extends Player implements Player.hasSetMoves {
     @Override
     public Position pickNextMove(Board board) {
         Position move = findNextMove(currentMove, moveOrder, board);
-        // start checking what is the next move in sequence next turn
-        currentMove = moveOrder.get(move);
+        currentMove = moveOrder.get(move); // store the next move in sequence for the next turn
         return move;
     }
 
