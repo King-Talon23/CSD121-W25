@@ -20,7 +20,6 @@ public class Main {
                 [Easy] Linus
                 [Intermediate] Randy
                 [Hard] Omola
-                [Impossible] Optimus
                 """);
         var player1 = Console.promptForPlayer(X);
         var player2 = Console.promptForPlayer(O);
