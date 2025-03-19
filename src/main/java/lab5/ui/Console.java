@@ -57,6 +57,7 @@ public class Console {
                 input = input.substring(1).toLowerCase(); // remove the '@' prefix
 
                 switch ( input ) {
+                    case "omola" -> { return new Omola(("Omola")); }
                     case "linus" -> { return new Linus("Linus"); }
                     case "circe" -> { return new Circe("Circe"); }
                     case "randy" -> { return new Randy("Randy"); }
