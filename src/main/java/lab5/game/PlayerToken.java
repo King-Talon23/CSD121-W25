@@ -1,4 +1,4 @@
-package tictactoe.game;
+package lab5.game;
 
 /**
  * A data type to represent each token on the board

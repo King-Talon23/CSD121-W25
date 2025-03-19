@@ -1,13 +1,16 @@
-package tictactoe.ui;
+package lab5.ui;
 
-import com.diogonunes.jcolor.AnsiFormat;
-import tictactoe.game.*;
-import tictactoe.players.*;
+import com.diogonunes.jcolor.*;
+import lab5.game.PlayerToken;
+import lab5.game.*;
+import lab5.players.*;
+import lab5.players.Circe;
 
 import java.util.Scanner;
 
-import static com.diogonunes.jcolor.Ansi.colorize;
+import static com.diogonunes.jcolor.Ansi.*;
 import static com.diogonunes.jcolor.Attribute.*;
+
 
 public class Console {
 
@@ -41,6 +44,7 @@ public class Console {
     /**
      * Repeatedly prompt the user to select a player for the given token
      * until the select a valid one of a set of valid players
+     *
      * @param whichPlayer The player for which to prompt
      * @return A player object representing the user's chosen player
      */
@@ -53,12 +57,14 @@ public class Console {
                 input = input.substring(1).toLowerCase(); // remove the '@' prefix
 
                 switch ( input ) {
-                    // E.g.
-                    // case "randy" -> { return new Randy(); }
+                    case "omola" -> { return new Omola(("Omola")); }
+                    case "linus" -> { return new Linus("Linus"); }
+                    case "circe" -> { return new Circe("Circe"); }
+                    case "randy" -> { return new Randy("Randy"); }
                     default -> printAlert("TODO: Implement computer players");
                 }
             } else {
-                return new Player(input);
+                return new lab5.players.HumanPlayer(input);
             }
         }
     }

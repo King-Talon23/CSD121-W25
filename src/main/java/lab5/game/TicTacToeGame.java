@@ -1,6 +1,6 @@
-package tictactoe.game;
+package lab5.game;
 
-import tictactoe.players.Player;
+import lab5.players.Player;
 
 /**
  * Represents the current state of a tictactoe game, including which player's turn it is,
