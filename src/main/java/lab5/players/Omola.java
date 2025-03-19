@@ -15,7 +15,7 @@ private final Random randomMove = new Random();
     @Override
     public Position pickNextMove(Board currentBoard) {
         List<Position> availableMoves = currentBoard.getEmptyCells();
-        PlayerToken omolaToken = getToken();
+        PlayerToken omolaToken = currentBoard.getNextTurnToken();
         PlayerToken opponentToken = (omolaToken == PlayerToken.X) ? PlayerToken.O : PlayerToken.X;
 
         for (Position move : availableMoves){
@@ -39,9 +39,6 @@ private final Random randomMove = new Random();
 
     }
 
-    private PlayerToken getToken() {
-        return null;
-    }
 
 
     @Override
