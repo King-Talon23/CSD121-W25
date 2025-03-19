@@ -7,8 +7,8 @@ import lab5.players.Player.*;
 import java.util.*;
 
 public class Circe extends Player implements hasSetMoves {
-    Position currentMove = midMid;
-    static final Map<Position, Position> moveOrder = Map.of(
+    public Position currentMove = midMid;
+    public static final Map<Position, Position> moveOrder = Map.of(
             midMid, topMid,
             topMid, topRight,
             topRight, midRight,

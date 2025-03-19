@@ -7,7 +7,7 @@ import lab5.players.Player.*;
 import java.util.*;
 
 public class Linus extends Player implements hasSetMoves{
-    Position currentMove = topLeft;
+    public Position currentMove = topLeft;
     static final Map<Position, Position> moveOrder = Map.of(
             topLeft, topMid,
             topMid, topRight,
