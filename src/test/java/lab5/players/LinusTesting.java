@@ -1,12 +1,9 @@
-package lab5;
+package lab5.players;
 
 import lab5.game.Board;
 import lab5.game.Col;
 import lab5.game.Position;
 import lab5.game.Row;
-import lab5.players.Circe;
-import lab5.players.Linus;
-import lab5.players.Randy;
 import org.junit.jupiter.api.Test;
 
 import static lab5.game.PlayerToken.O;
