@@ -4,7 +4,7 @@ of the Player class.
 SubClasses of types can always be returned in place of their superClass but super classes cannot be returned 
 in place of their subclass
 
-i.e the class pipeline looks similar to this PLayer -> HumanPlayer -> <insert subType of HumanPlayer>
+i.e the class pipeline looks similar to this Player -> HumanPlayer -> <insert subType of HumanPlayer>
 You can always return something lower down in the pipeline from the return type but never anything higher in the line 
 than the return type
 
@@ -20,3 +20,8 @@ those subclasses, of which there are none.
 
 ------------------------------------------------------------------------------------------------------------------------
 
+
+Since in TicTacToeGame, players are only declared as the "Players" abstract type instead of a specific subtype, and 
+because all player subtypes inherit the PickNextMove method from the superclass "Players", TicTacToeGame can work with 
+any subtype we added without having to edit anything in Main or TicTacToeGame, this is all thanks to subtype 
+Polymorphism
