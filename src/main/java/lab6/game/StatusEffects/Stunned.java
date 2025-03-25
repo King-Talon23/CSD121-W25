@@ -1,4 +1,4 @@
-package TK.game.StatusEffects;
+package lab6.game.StatusEffects;
 
 public class Stunned extends StatusEffect implements StatusEffect.ActionPointEffect {
     public Stunned() {

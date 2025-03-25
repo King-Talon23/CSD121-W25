@@ -1,4 +1,4 @@
-package TK.Entities.SoldierStuff;
+package lab6.Entities;
 
 import java.util.HashMap;
 import java.util.Map;

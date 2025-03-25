@@ -1,6 +1,6 @@
-package TK.game.StatusEffects;
+package lab6.game.StatusEffects;
 
-import static TK.game.game.getRandomIntInRange;
+import static lab6.game.game.getRandomIntInRange;
 
 public class ChryssalidPoison extends StatusEffect implements StatusEffect.DamageEffect {
     public ChryssalidPoison() {

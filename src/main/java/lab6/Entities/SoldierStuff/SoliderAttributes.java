@@ -1,4 +1,4 @@
-package TK.Entities.SoldierStuff;
+package lab6.Entities.SoldierStuff;
 
 public class SoliderAttributes {
 
@@ -10,6 +10,9 @@ public class SoliderAttributes {
         SPECIALIST, GRENADIER, RANGER, SHARPSHOOTER
     }
 
+    /**
+     * All of these stats are the real Values used in XCOM 2
+     */
     private static final int[][] AIM = {
             // specialist - grenadier - ranger - sharpshooter
             {65, 65, 65, 65}, // Rookie

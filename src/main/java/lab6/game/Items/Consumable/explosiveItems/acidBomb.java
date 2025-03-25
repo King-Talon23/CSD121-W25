@@ -1,4 +1,4 @@
-package TK.game.Items.Consumable.explosiveItems;
+package lab6.game.Items.Consumable.explosiveItems;
 
 public class acidBomb {
 }

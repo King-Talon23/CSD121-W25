@@ -1,4 +1,4 @@
-package TK.Utility;
+package lab6.Utility;
 
 import java.util.*;
 

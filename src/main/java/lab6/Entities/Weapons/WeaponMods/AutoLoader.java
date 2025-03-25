@@ -1,4 +1,4 @@
-package TK.Entities.Weapons.WeaponMods;
+package lab6.Entities.Weapons.WeaponMods;
 
 public class AutoLoader extends WeaponMod{
     public AutoLoader(ModTier tier) {

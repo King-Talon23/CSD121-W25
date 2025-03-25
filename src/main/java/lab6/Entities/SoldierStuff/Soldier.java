@@ -1,16 +1,16 @@
-package TK.Entities.SoldierStuff;
+package lab6.Entities.SoldierStuff;
 
 
-import TK.Entities.Entity;
-import TK.Utility.GetRandom;
-import TK.Entities.Weapons.Primary.AssaultRifle;
-import TK.Entities.Weapons.WeaponTier;
+import lab6.Entities.Entity;
+import lab6.Utility.GetRandom;
+import lab6.Entities.Weapons.Primary.AssaultRifle;
+import lab6.Entities.Weapons.WeaponTier;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static TK.Entities.SoldierStuff.SoliderAttributes.*;
+import static lab6.Entities.SoldierStuff.SoliderAttributes.*;
 
 public class Soldier extends Entity {
 

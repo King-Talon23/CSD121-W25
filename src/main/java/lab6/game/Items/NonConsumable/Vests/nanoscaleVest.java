@@ -1,4 +1,4 @@
-package TK.game.Items.NonConsumable.Vests;
+package lab6.game.Items.NonConsumable.Vests;
 
 public class nanoscaleVest {
 }

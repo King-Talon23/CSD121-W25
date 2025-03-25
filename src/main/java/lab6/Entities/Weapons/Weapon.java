@@ -1,12 +1,12 @@
-package TK.Entities.Weapons;
+package lab6.Entities.Weapons;
 
-import TK.Entities.Weapons.WeaponMods.*;
-import TK.game.Weapons.WeaponMods.*;
-
+import lab6.Entities.Weapons.WeaponMods.WeaponMod;
+import lab6.Entities.Weapons.WeaponMods.*;
+import lab6.Entities.Weapons.WeaponTier.*;
 import java.util.List;
 import java.util.Map;
 
-import static TK.game.game.getRandomIntInRange;
+
 
 public abstract class Weapon {
     public String name;
@@ -14,7 +14,6 @@ public abstract class Weapon {
     public Integer damage;
     public Integer ammo;
     public Integer clipSize;
-    public Range range;
     public Integer armourShredding;
     public Integer aimBonus;
     public Integer freeReloads;

@@ -1,6 +1,6 @@
-package TK.game.Items;
+package lab6.game.Items;
 
-import TK.Entities.Entity;
+import lab6.Entities.Entity;
 
 public abstract class Item {
     String name;

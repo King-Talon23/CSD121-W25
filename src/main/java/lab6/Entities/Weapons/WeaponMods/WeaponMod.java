@@ -1,6 +1,6 @@
-package TK.Entities.Weapons.WeaponMods;
+package lab6.Entities.Weapons.WeaponMods;
 
-import static TK.Entities.Weapons.WeaponMods.ModTier.modTierNameMap;
+import static lab6.Entities.Weapons.WeaponMods.ModTier.modTierNameMap;
 
 public abstract class WeaponMod {
     ModTier tier;

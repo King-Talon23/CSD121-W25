@@ -1,15 +1,15 @@
-package TK.game.Items.Consumable.explosiveItems;
+package lab6.game.Items.Consumable.explosiveItems;
 
-import TK.Entities.Entity;
-import TK.game.Items.Item;
+import lab6.Entities.Entity;
+import lab6.game.Items.Item;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static TK.Entities.SoldierStuff.Cover.FLANKED;
-import static TK.Entities.SoldierStuff.Cover.explosionCoverMap;
-import static TK.game.game.*;
+import static lab6.Entities.Cover.FLANKED;
+import static lab6.Entities.Cover.explosionCoverMap;
+import static lab6.game.game.*;
 
 public abstract class ExplosiveItem extends Item {
     Integer lowEndDamage;

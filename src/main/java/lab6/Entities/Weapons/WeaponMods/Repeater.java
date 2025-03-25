@@ -1,4 +1,4 @@
-package TK.Entities.Weapons.WeaponMods;
+package lab6.Entities.Weapons.WeaponMods;
 
 public class Repeater extends WeaponMod{
     public Repeater(ModTier tier) {

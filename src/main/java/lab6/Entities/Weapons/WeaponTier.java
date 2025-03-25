@@ -1,4 +1,4 @@
-package TK.Entities.Weapons;
+package lab6.Entities.Weapons;
 
 import java.util.HashMap;
 import java.util.Map;

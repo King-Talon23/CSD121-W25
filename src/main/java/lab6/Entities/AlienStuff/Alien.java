@@ -1,22 +1,19 @@
-package TK.Entities.AlienStuff;
+package lab6.Entities.AlienStuff;
 
-import TK.Entities.AlienStuff.Aliens.BioMechanical;
-import TK.Entities.Entity;
-import TK.game.Items.Item;
+import lab6.Entities.AlienStuff.Aliens.BioMechanical;
+import lab6.Entities.Entity;
+import lab6.game.Items.Item;
 
 import java.util.List;
 
 public abstract class Alien extends Entity {
-    Integer xpWorth;
     BioMechanical bioType;
 
     public Alien(List<Item> items) {
         super(items);
 
-        this.xpWorth = getXPWorth();
         this.bioType = mechOrFlesh();
-        this.dodge = getDodge(); // only mechs have base dodge since they cant use cover to hunker down
-
+        this.dodge = getDodge();
     }
     public abstract String getName();
 

@@ -1,7 +1,7 @@
-package TK.game.Items.Consumable.healingItems;
+package lab6.game.Items.Consumable.healingItems;
 
-import TK.Entities.Entity;
-import TK.game.Items.Item;
+import lab6.Entities.Entity;
+import lab6.game.Items.Item;
 
 import static TK.game.game.getRandomIntInRange;
 import static TK.game.game.println;

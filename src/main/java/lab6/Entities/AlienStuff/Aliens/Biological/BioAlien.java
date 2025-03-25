@@ -1,9 +1,9 @@
-package TK.Entities.AlienStuff.Aliens.Biological;
+package lab6.Entities.AlienStuff.Aliens.Biological;
 
-import TK.Entities.AlienStuff.Alien;
-import TK.Entities.AlienStuff.Aliens.BioMechanical;
-import TK.game.Items.Item;
-import TK.Entities.Weapons.Weapon;
+import lab6.Entities.AlienStuff.*;
+import lab6.Entities.AlienStuff.Aliens.BioMechanical;
+import lab6.game.Items.Item;
+import lab6.Entities.Weapons.Weapon;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package TK.Entities.AlienStuff.Aliens;
+package lab6.Entities.AlienStuff.Aliens;
 
 public enum BioMechanical {
     BIOLOGICAL, MECHANICAL;

@@ -1,4 +1,4 @@
-package TK.game.StatusEffects;
+package lab6.game.StatusEffects;
 
 public class Disoriented extends StatusEffect implements StatusEffect.StatEffect {
     public Disoriented() {

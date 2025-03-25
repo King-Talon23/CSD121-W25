@@ -1,10 +1,10 @@
-package TK.Entities;
+package lab6.Entities;
 
-import TK.Entities.SoldierStuff.Cover;
+import lab6.Entities.SoldierStuff.Cover;
 import TK.Utility.GetRandom;
-import TK.game.Items.Item;
-import TK.Entities.Weapons.Weapon;
-import TK.game.StatusEffects.StatusEffect;
+import lab6.game.Items.Item;
+import lab6.Entities.Weapons.Weapon;
+import lab6.game.StatusEffects.StatusEffect;
 
 
 import java.util.*;
