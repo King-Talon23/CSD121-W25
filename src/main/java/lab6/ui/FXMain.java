@@ -2,87 +2,139 @@ package lab6.ui;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.media.MediaView;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.Media;
-import javafx.stage.Stage;
-import java.io.File;
-import java.net.URL;
-
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.geometry.Insets;
-import javafx.scene.control.TextArea;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
-import javax.print.DocFlavor;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import javafx.stage.Stage;
+
+import static lab6.ui.Scenes.OpeningCutscene.getOpeningScene;
+
 
 public class FXMain extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        BorderPane borderPane = new BorderPane();
-
-        // video stuff
-        URL videoPath = FXMain.class.getResource("/xcom_opening_final.mp4");
-        String stringVideoPath = videoPath.toExternalForm();
-        Media media = new Media(stringVideoPath);
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
-        MediaView mediaView = new MediaView(mediaPlayer);
-        mediaPlayer.setAutoPlay(true);
-
-        // textArea propertys
-        TextArea leftTextArea = createTextArea();
-        TextArea rightTextArea = createTextArea();
-        leftTextArea.setStyle("-fx-font-size: 12px; -fx-font-family: Arial;");
-        rightTextArea.setStyle("-fx-font-size: 12px; -fx-font-family: Arial;");
-        setupConveyorBeltEffect(leftTextArea);
-        setupConveyorBeltEffect(rightTextArea);
-
-        borderPane.setCenter(mediaView);
-        borderPane.setLeft(leftTextArea);
-        borderPane.setRight(rightTextArea);
-
-        BorderPane.setMargin(leftTextArea, new Insets(10));
-        BorderPane.setMargin(rightTextArea, new Insets(10));
-
-
-        Scene scene = new Scene(borderPane, 800, 600);
+        Scene scene = getOpeningScene();
         primaryStage.setTitle("XCOM 2: Testing");
         primaryStage.setScene(scene);
+        primaryStage.setFullScreen(true);
+        primaryStage.setResizable(false);
+
         primaryStage.show();
     }
 
-    private TextArea createTextArea() {
-        TextArea textArea = new TextArea();
-        textArea.setEditable(false);
-        textArea.setWrapText(true);
-        textArea.setStyle("-fx-font-size: 20px; -fx-background-color: lightgray;");
-        textArea.setPrefWidth(200);
-        textArea.setPrefHeight(600);
-        return textArea;
+    private Text createTextBorder() {
+        Text border = new Text();
+        //* make text size 8, font Consolas, bold, white and have a black background
+        border.setStyle("-fx-font-size: 8px; -fx-font-family: Consolas;" +
+                "-fx-font-weight: bold; -fx-text-fill: white;");
+        border.setTextAlignment(TextAlignment.CENTER);
+
+        return border;
     }
 
-    private void setupConveyorBeltEffect(TextArea textArea) {
-        final int[] i = {0};
+
+    private void setupConveyorBeltEffect(Text text, int borderType) {
+        String[][] borderPattern = getBorderType(borderType);
+
+        AtomicInteger row = new AtomicInteger(0);
+        AtomicInteger rowSection = new AtomicInteger(0);
+
+        text.setWrappingWidth(75);
+
         Timeline timeline = new Timeline(
-                new KeyFrame(Duration.seconds(0.1), event -> {
-                    String currentText = textArea.getText();
-                    if (currentText.split("\n").length > 20) {// max lines in feild
+                new KeyFrame(Duration.seconds(0.15), event -> {
+                    String currentText = text.getText();
+                    String[] lines = currentText.split("\n");
+
+                    if (lines.length > 40) {
                         String updatedText = currentText.replaceFirst(".*\n", "");
-                        textArea.setText(updatedText);
+                        text.setText(updatedText);
                     }
 
+                    String newText = text.getText() + centerText(borderPattern[row.get()][rowSection.get()]) + "\n";
+                    text.setText(newText);
 
-                    textArea.appendText(i[0] + "New line of text\n");
-                    i[0]++;
+                    rowSection.getAndIncrement();
+                    if (rowSection.get() >= borderPattern[row.get()].length) {
+                        rowSection.set(0);
+                        row.getAndIncrement();
+                        if (row.get() >= borderPattern.length) {
+                            row.set(0);
+                        }
+                    }
                 })
         );
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }
+
+    private static String[][] getBorderType(int borderType) {
+        String[][] borderPattern;
+        switch (borderType) {
+            case 1 -> {
+                borderPattern = new String[][]{ // regular
+                        {"//\\/\\\\", "//\\  /\\\\", "<|(> () <)|>", "\\\\/  \\//", "\\\\/\\//"},
+                        {"/  \\", "/ /\\ \\", "\\ \\/ /", "\\  /", "//\\\\"},
+                        {"/  \\", "/ /\\ \\", "(  ()  )", "\\ \\/ /", "\\  /"},
+                        {"\\\\//", "/  \\", "/ /\\ \\", " \\ \\/ /", "\\  /"}
+                };
+            }
+            case 2 -> {
+                borderPattern = new String[][]{ // winner
+                        {"\\    /", " \\  / ", "  \\/  ", "  /\\  ", " /  \\ "},  // W
+                        {"\\    /", " \\  / ", "  \\/  ", "  /\\  ", " /  \\ "},  // I
+                        {"\\\\  //", " \\/  \\", "  /\\  ", " /  \\ ", "////\\\\ "},  // N
+                        {"//  \\\\", "  \\/  ", "  /\\  ", " /  \\ ", "////\\\\ "},  // N
+                        {"\\    /", " \\  / ", "  \\/  ", "  /\\  ", " /  \\ "},  // E
+                        {"\\\\  //", " \\/  \\", "  /\\  ", " /  \\ ", "////\\\\ "},  // R
+                };
+            }
+            case 3 -> {
+                borderPattern = new String[][]{ // loser
+                        {"\\    /", " \\  / ", "  \\/  ", "  /\\  ", " /  \\ "},  // L
+                        {"\\\\  //", " \\/  \\", "  /\\  ", " /  \\ ", "////\\\\ "},  // O
+                        {"\\\\  //", " \\/  \\", "  /\\  ", " /  \\ ", "////\\\\ "},  // S
+                        {"\\\\  //", " \\/  \\", "  /\\  ", " /  \\ ", "////\\\\ "},  // E
+                        {"\\\\  //", " \\/  \\", "  /\\  ", " /  \\ ", "////\\\\ "},  // R
+                };
+            }
+            default -> {
+                borderPattern = new String[][]{ // ERROR
+                        {"ERROR", "ERROR", "ERROR", "ERROR", "ERROR"},
+                        {"ERROR", "ERROR", "ERROR", "ERROR", "ERROR"},
+                        {"ERROR", "ERROR", "ERROR", "ERROR", "ERROR"},
+                        {"ERROR", "ERROR", "ERROR", " ERROR", "ERROR"}
+                };
+            }
+
+        }
+        return borderPattern;
+    }
+
+    private String centerText(String text) {
+        // center the given String
+        int maxWidth = 14;
+        int padding = (maxWidth - text.length()) / 2;
+        StringBuilder centeredText = new StringBuilder();
+
+        // Add spaces to center the text
+        centeredText.append(" ".repeat(Math.max(0, padding)));
+        centeredText.append(text);
+
+        // fill the rest of the space to match the maxWidth
+        while (centeredText.length() < maxWidth) {
+            centeredText.append(" ");
+        }
+
+        return centeredText.toString();
+    }
+
 
     public static void main(String[] args) {
         launch(args);
