@@ -6,6 +6,7 @@ import lab6.Entities.Weapons.Weapon;
 import lab6.Utility.GetRandom;
 import lab6.Entities.Weapons.Primary.AssaultRifle;
 import lab6.Entities.Weapons.WeaponTier;
+import lab6.Entities.SoldierStuff.SoliderAttributes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,6 +30,12 @@ public class Soldier extends Entity {
         this.xp = 0;
     }
 
+    public String printSummery() {
+
+        return """
+                """;
+    }
+
     @Override
     public Integer getDodge() {
         return 0;
@@ -46,12 +53,12 @@ public class Soldier extends Entity {
 
     @Override
     public Integer getWill() {
-        return 0;
+        return 45;
     }
 
     @Override
     public Integer getHack() {
-        return 0;
+        return setHack(this.rank, this.classType);
     }
 
     @Override
@@ -76,6 +83,7 @@ public class Soldier extends Entity {
 
     @Override
     public void handleDeath() {
+
         System.out.println("\n                                    _ ._  _ , ._ _");
         System.out.println("                                  (_  ' ( `  )_ .__)");
         System.out.println("                                ( (  (    )   `)  ) _)");
@@ -93,11 +101,17 @@ public class Soldier extends Entity {
     }
 
     public void levelUp() {
+        this.rank = rankMap.get(this.rank);
+
         this.hp = setHealth(this.rank, this.classType);
         this.aim = setAim(this.rank, this.classType);
         this.hack = setHack(this.rank, this.classType);
         this.will = Math.min((this.will + GetRandom.IntInRange(4, 12)), 100);
 
+        if (this.rank == Rank.SQUADDIE) {
+            // assign class weapons upon reaching second rank
+            this.weapon = classWeapon.get(this.classType);
+        }
     }
 
     public String getFirstName() {
@@ -121,20 +135,16 @@ public class Soldier extends Entity {
     List<String> firstnames = new ArrayList<>(Arrays.asList(
             "Jacob",
             "Luc",
-            "Lauren",
             "Talon",
             "John",
             "Randy",
             "Robbert",
             "Nomad",
             "[REDACTED]"
-
-
     ));
     List<String> lastnames = new ArrayList<>(Arrays.asList(
             "Kluding",
             "Brochu",
-            "Bussineau",
             "King",
             "F. Kennedy",
             "Nixon",

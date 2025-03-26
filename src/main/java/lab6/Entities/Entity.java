@@ -25,6 +25,7 @@ public abstract class Entity {
     public Integer armour;
     public Weapon weapon;
     public List<Item> items;
+    public boolean isAlive;
     public List<StatusEffect> currentEffects;
 
     public Cover coverType;
@@ -45,6 +46,7 @@ public abstract class Entity {
         this.items = items;
         this.coverType = NONE;
         this.cover = coverValue.get(this.coverType);
+        this.isAlive = true;
     }
 
     public abstract Integer getDodge();

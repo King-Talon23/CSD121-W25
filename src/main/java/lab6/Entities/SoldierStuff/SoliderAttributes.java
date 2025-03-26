@@ -1,13 +1,40 @@
 package lab6.Entities.SoldierStuff;
 
+import lab6.Entities.Weapons.Primary.*;
+import lab6.Entities.Weapons.Weapon;
+import lab6.Entities.Weapons.WeaponTier;
+
+import java.util.*;
+
+import static lab6.Entities.SoldierStuff.SoliderAttributes.Rank.*;
+
 public class SoliderAttributes {
 
     public enum Rank {
-        ROOKIE, SQUADDIE, CORPORAL, SERGEANT, LIEUTENANT, CAPTAIN, MAJOR, COLONEL
+        ROOKIE, SQUADDIE, CORPORAL, SERGEANT, LIEUTENANT, CAPTAIN, MAJOR, COLONEL;
+
     }
 
     public enum ClassType {
         SPECIALIST, GRENADIER, RANGER, SHARPSHOOTER
+    }
+
+    public static Map<ClassType, Weapon> classWeapon = Map.of(
+            ClassType.SPECIALIST, new AssaultRifle(WeaponTier.CONVENTIONAL),
+            ClassType.GRENADIER, new Cannon(WeaponTier.CONVENTIONAL),
+            ClassType.RANGER, new Shotgun(WeaponTier.CONVENTIONAL),
+            ClassType.SHARPSHOOTER, new SniperRifle(WeaponTier.CONVENTIONAL)
+    );
+
+    public static Map<Rank, Rank> rankMap = new HashMap<> ();
+    static {
+        rankMap.put(ROOKIE, SQUADDIE);
+        rankMap.put(SQUADDIE, CORPORAL);
+        rankMap.put(CORPORAL, SERGEANT);
+        rankMap.put(SERGEANT, LIEUTENANT);
+        rankMap.put(LIEUTENANT, CAPTAIN);
+        rankMap.put(CAPTAIN, MAJOR);
+        rankMap.put(MAJOR, COLONEL);
     }
 
     /**

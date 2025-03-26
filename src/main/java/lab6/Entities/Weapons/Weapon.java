@@ -48,7 +48,7 @@ public abstract class Weapon {
 
     public Integer grazedShot() {
         // one quarter of normal damage inflicted on dodge/graze
-        return (int) (normalShot() * 0.25);
+        return normalShot() / 4;
     }
 
 

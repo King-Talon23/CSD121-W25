@@ -1,4 +1,4 @@
-package TK.Entities.Weapons.Primary;
+package lab6.Entities.Weapons.Primary;
 
 import lab6.Entities.Weapons.Weapon;
 import lab6.Entities.Weapons.WeaponTier;
@@ -6,11 +6,10 @@ import lab6.Entities.Weapons.WeaponTier;
 import java.util.Map;
 
 import static lab6.Entities.Weapons.WeaponTier.*;
-import static lab6.Utility.GetRandom.StringListItem;
 
-public class ShotGun extends Weapon {
+public class Shotgun extends Weapon {
 
-    public ShotGun(WeaponTier weaponTier) {
+    public Shotgun(WeaponTier weaponTier) {
         super(weaponTier);
     }
 
