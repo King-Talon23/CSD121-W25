@@ -35,20 +35,19 @@ public class ScrollBorder {
         AtomicInteger row = new AtomicInteger(0);
         AtomicInteger rowSection = new AtomicInteger(0);
 
-
         text.setWrappingWidth(100);
 
         Timeline timeline = new Timeline(
-                new KeyFrame(Duration.seconds(0.075), event -> {
+                new KeyFrame(Duration.seconds(0.03333), event -> { // 30 fps
                     String currentText = text.getText();
                     String[] lines = currentText.split("\n");
 
-                    if (lines.length > 95) { // line limit assumes full screen
-                        String updatedText = currentText.replaceFirst(".*\n", "");
+                    if (lines.length > 85) { // this assumes full screen
+                        String updatedText = currentText.substring(0, currentText.lastIndexOf('\n'));
                         text.setText(updatedText);
                     }
 
-                    String newText = text.getText() + centerText(borderPattern[row.get()][rowSection.get()]) + "\n";
+                    String newText = centerText(borderPattern[row.get()][rowSection.get()]) + "\n" + text.getText();
                     text.setText(newText);
 
                     rowSection.getAndIncrement();
@@ -77,8 +76,11 @@ public class ScrollBorder {
                         {"/  \\", "/ /\\ \\", "(  ()  )", "\\ \\/ /", "\\  /"},
                         {"\\\\//", "/  \\", "/ /\\ \\", " \\ \\/ /", "\\  /"}
                 };
-            // used this website to complete all borders except regular
+            /** used this website to complete all borders except regular
             // https://patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20 - font = big money ne/nw
+
+            // The lists and upsidesDowns and backwards because of how the conveyor Effect loads the strings
+             **/
             case WIN -> new String[][] { // on player win
 
                 };
@@ -86,14 +88,14 @@ public class ScrollBorder {
 
                 };
             case XCOM -> new String[][] { // Player turn
-                    {"\n==============\n", " /$$   /$$", "| $$  / $$", "|  $$/ $$/",
-                    " \\  $$$$/,", "$$  $$", " /$$/\\  $$", "| $$  \\ $$", "|__/  |__/"},  // X
-                    {"  /$$$$$$", " /$$__  $$","| $$  \\__/","| $$     ","| $$     ","| $$    $$","|  $$$$$$/", "\\______/"},  // C
-                    {" /$$$$$$", " /$$__  $$", "| $$  \\ $$","| $$  | $$","| $$  | $$","| $$  | $$","|  $$$$$$/","\\______/"},  // O
-                    {" /$$      /$$","| $$$    /$$$","| $$$$  /$$$$","| $$ $$/$$ $$","| $$  $$$| $$","| $$\\  $ | $$","| $$ \\/  | $$","__/     |__/"} // M
-
+                    {"__/     |__/", "| $$ \\/  | $$","| $$\\  $ | $$","| $$  $$$| $$","| $$ $$/$$ $$",
+                            "| $$$$  /$$$$", "| $$$    /$$$", " /$$      /$$"}, // M
+                    {"\\______/","|  $$$$$$/", "| $$  | $$","| $$  | $$","| $$  | $$","| $$  \\ $$"," /$$__  $$"," /$$$$$$",},  // O
+                    {"\\______/", "|  $$$$$$/","| $$    $$","| $$     ","| $$     ","| $$  \\__/"," /$$__  $$","  /$$$$$$"},  // C
+                    {"|__/  |__/", "| $$  \\ $$"," /$$/\\  $$","$$  $$"," \\  $$$$/,",
+                            "|  $$/ $$/","| $$  / $$", " /$$   /$$","=============="}  // X
             };
-            case ALIEN -> new String[][] { // Player turn - right border
+            case ALIEN -> new String[][] { // Alien turn
                     {"/\\", "/  \\", "/ /\\ \\", "/ ____ \\", "/_/    \\_\\"},  // A
                     {"| |     ", "| |     ", "| |     ", "| |____", "|______|"},  // L
                     {"|_   _|", "| |", "| |", "_| |_", "|_____|"},  // I

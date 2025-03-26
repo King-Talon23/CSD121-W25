@@ -12,6 +12,8 @@ import lab6.ui.FXMain;
 
 import java.net.URL;
 
+import static lab6.ui.Scenes.a1_MissionBrief.missionBriefing;
+
 public class a0_OpeningCutscene {
 
     public static Scene getOpeningScene(Stage primaryStage) {
@@ -28,17 +30,26 @@ public class a0_OpeningCutscene {
         mediaPlayer.setOnEndOfMedia(() -> { // video plays fully
             videoOver(mediaPlayer, primaryStage);
         });
+        mediaPlayer.setOnError(() -> { // cutscene doesnt load
 
-        mediaPlayer.setOnStopped(() -> { // cutscene skipped
+            //reset mediaPlayer if the video doesnt load properly
+            mediaPlayer.dispose();
+
+            Media newMedia = new Media(stringVideoPath);
+            MediaPlayer newMediaPlayer = new MediaPlayer(newMedia);
+
+            newMediaPlayer.setAutoPlay(true);
+
+            newMediaPlayer.setOnEndOfMedia(() -> {
+                videoOver(newMediaPlayer, primaryStage);
+            });
+
+            mediaView.setMediaPlayer(newMediaPlayer);
+        });
+
+        skipButton.setOnAction(e -> { // cutscene skipped
             videoOver(mediaPlayer, primaryStage);
-        });
-
-        skipButton.setOnAction(e -> {
-            if (mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
-                // stop pre-mature presses from breaking stuff
-                mediaPlayer.stop();
-            }
-        });
+            });
 
         root.setCenter(mediaView);
         root.setBottom(skipButton);
@@ -49,7 +60,7 @@ public class a0_OpeningCutscene {
 
     private static void videoOver(MediaPlayer mediaPlayer, Stage primaryStage) {
         mediaPlayer.dispose();
-        Scene chooseCharacterScene = a1_ChooseCharacter.chooseCharacter(primaryStage);
+        Scene chooseCharacterScene = missionBriefing(primaryStage, null);
         primaryStage.setScene(chooseCharacterScene);
         primaryStage.setFullScreen(true);
     }

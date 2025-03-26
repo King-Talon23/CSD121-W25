@@ -23,11 +23,10 @@ public class Soldier extends Entity {
     ClassType classType;
     Integer xp;
 
-    public Soldier() { // always creates a rookie
+    public Soldier(ClassType SoliderClass) { // always creates a rookie
         super(null);
         this.rank = Rank.ROOKIE;
-        this.classType = getRandomClass();
-        this.xp = 0;
+        this.classType = SoliderClass;
     }
 
     public String printSummery() {
@@ -120,16 +119,6 @@ public class Soldier extends Entity {
 
     public String getLastname() {
         return GetRandom.StringListItem(lastnames);
-    }
-
-    private ClassType getRandomClass(){
-        return switch (GetRandom.IntInRange(1,4)) {
-            case 1 -> ClassType.SPECIALIST;
-            case 2 -> ClassType.GRENADIER;
-            case 3 -> ClassType.RANGER;
-            case 4 -> ClassType.SHARPSHOOTER;
-            default -> throw new IllegalArgumentException("Int out of bounds, Class does not exist");
-        };
     }
 
     List<String> firstnames = new ArrayList<>(Arrays.asList(
