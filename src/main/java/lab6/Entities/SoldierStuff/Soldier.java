@@ -2,6 +2,7 @@ package lab6.Entities.SoldierStuff;
 
 
 import lab6.Entities.Entity;
+import lab6.Entities.Weapons.Weapon;
 import lab6.Utility.GetRandom;
 import lab6.Entities.Weapons.Primary.AssaultRifle;
 import lab6.Entities.Weapons.WeaponTier;
@@ -22,10 +23,55 @@ public class Soldier extends Entity {
     Integer xp;
 
     public Soldier() { // always creates a rookie
-        super(6, 65, 12, 0, 40, 0, 5, 0, new AssaultRifle(WeaponTier.CONVENTIONAL), null);
+        super(null);
         this.rank = Rank.ROOKIE;
         this.classType = getRandomClass();
         this.xp = 0;
+    }
+
+    @Override
+    public Integer getDodge() {
+        return 0;
+    }
+
+    @Override
+    public Integer getAim() {
+        return setAim(this.rank, this.classType);
+    }
+
+    @Override
+    public Integer getMobility() {
+        return 6;
+    }
+
+    @Override
+    public Integer getWill() {
+        return 0;
+    }
+
+    @Override
+    public Integer getHack() {
+        return 0;
+    }
+
+    @Override
+    public Integer getHP() {
+        return setHealth(this.rank, this.classType);
+    }
+
+    @Override
+    public Integer getDefense() {
+        return 0;
+    }
+
+    @Override
+    public Weapon getWeapon() {
+        return new AssaultRifle(WeaponTier.CONVENTIONAL);
+    }
+
+    @Override
+    public Integer getArmour() {
+        return 0;
     }
 
     @Override
@@ -39,8 +85,8 @@ public class Soldier extends Entity {
         System.out.println("                                   '::::::::::::::'");
         System.out.println("╭──────────────────────────────────────/ ─ ── \\────────────────────────────────────╮");
         System.out.println("│                                     lol you died                                 │");
-        System.out.println("│                                       (loser)                                    │");
-        System.out.println("│                                (didn't even do good)                             │");
+        System.out.println("│                                                                                  │");
+        System.out.println("│                                                                                  │");
         System.out.println("╰──────────────────────────────────────────────────────────────────────────────────╯");
 
         System.exit(0);

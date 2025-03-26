@@ -9,8 +9,8 @@ import java.util.List;
 
 public abstract class AlienMech extends Alien {
 
-    public AlienMech(Integer hp, Integer aim, Integer mobility, Integer dodge, Integer will, Integer defense, Integer hack, Integer armour, Weapon weapon, List<Item> items, Integer xpWorth) {
-        super(hp, aim, mobility, dodge, will, defense, hack, armour, weapon, items, xpWorth);
+    public AlienMech(List<Item> items) {
+        super(items);
     }
 
     @Override

@@ -15,7 +15,6 @@ public abstract class WeaponMod {
 
     public abstract Integer applyEffect();
 
-
     public abstract String getName();
 
     public abstract String getDescription();

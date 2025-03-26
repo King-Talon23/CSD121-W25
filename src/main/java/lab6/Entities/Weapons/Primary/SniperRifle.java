@@ -1,12 +1,12 @@
-package TK.Entities.Weapons.Primary;
+package lab6.Entities.Weapons.Primary;
 
-import TK.Entities.Weapons.Range;
-import TK.Entities.Weapons.Weapon;
-import TK.Entities.Weapons.WeaponTier;
+import lab6.Entities.Weapons.Weapon;
+import lab6.Entities.Weapons.WeaponTier;
+import static lab6.Entities.Weapons.WeaponTier.*;
 
 import java.util.Map;
 
-import static TK.Entities.Weapons.WeaponTier.*;
+
 
 public class SniperRifle extends Weapon {
     public SniperRifle(WeaponTier weaponTier) {
@@ -70,10 +70,6 @@ public class SniperRifle extends Weapon {
     @Override
     public Integer getAimBonus() {
         return 10;
-    }
-
-    public Range getEffectiveRange() {
-        return Range.HIGH;
     }
 
     @Override

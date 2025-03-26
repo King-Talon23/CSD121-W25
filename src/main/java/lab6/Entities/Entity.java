@@ -1,18 +1,16 @@
 package lab6.Entities;
 
 import lab6.Entities.SoldierStuff.Cover;
-import TK.Utility.GetRandom;
+import lab6.Utility.GetRandom;
 import lab6.game.Items.Item;
 import lab6.Entities.Weapons.Weapon;
+import lab6.Entities.Weapons.Weapon.*;
 import lab6.game.StatusEffects.StatusEffect;
-
+import lab6.Entities.Weapons.ShotBehaviour;
+import static lab6.Entities.SoldierStuff.Cover.*;
+import static lab6.Entities.Weapons.ShotBehaviour.*;
 
 import java.util.*;
-
-
-import static TK.Entities.SoldierStuff.Cover.*;
-import static TK.Entities.SoldierStuff.Cover.coverValue;
-
 
 public abstract class Entity {
     public Integer hp;
@@ -76,6 +74,13 @@ public abstract class Entity {
         this.weapon.reload();
     }
 
+    public final Map<ShotBehaviour, Integer> shotTypeMap = Map.of(
+            MISS, 0,
+            GRAZE, this.weapon.grazedShot(),
+            HIT, this.weapon.normalShot(),
+            CRIT, this.weapon.critShot()
+    );
+
     public void shootAtTarget(Entity target) {
         int[] aimResults = aimAtTarget(target);
         // doesDodge decreases the shot type from crit->hit->graze->miss
@@ -88,9 +93,9 @@ public abstract class Entity {
         boolean doesCrit = GetRandom.IntInRange(1, 100) <= this.weapon.getTrueCritChance();
 
         int shotResult = GetRandom.IntInRange(1, 100);
-        Weapon.ShotBehaviour shotType = getShotType(shotResult, aimResults, doesCrit, doesDodge);
-        if (shotType != Weapon.ShotBehaviour.MISS) {
-            int damage = Weapon.shotTypeMap.get(shotType);
+        ShotBehaviour shotType = getShotType(shotResult, aimResults, doesCrit, doesDodge);
+        if (shotType != MISS) {
+            Integer damage = shotTypeMap.get(shotType);
 
             // armour logic
             if (target.armour > 0) {
@@ -140,7 +145,7 @@ public abstract class Entity {
     public abstract void handleDeath();
 
 
-    private Weapon.ShotBehaviour getShotType(int result, int[] aimList, Boolean doesUpgrade, Boolean doesDowngrade) {
+    private ShotBehaviour getShotType(int result, int[] aimList, Boolean doesUpgrade, Boolean doesDowngrade) {
         /**
          * Determines the ShotBehaviour of a weapon based on result type (graze, hit, or miss)
          * and whether it should be upgraded or downgraded.
@@ -149,30 +154,29 @@ public abstract class Entity {
          * @param doesDowngrade true if the enemy dodges, shot type is  downgraded.
          * @return The determined ShotBehaviour value after applying upgrade or downgrade.
          */
-        Weapon.ShotBehaviour currentType = null; // Variable to store the current shot type
+        ShotBehaviour currentType = null; // Variable to store the current shot type
 
         // Determine current shot type based on result
         for (int i = 0; i < aimList.length; i++) {
-            int x = (i > 0) ? 1 : 0; // Simplified initialization
+            int x = (i > 0) ? 1 : 0;
             if (result <= aimList[i] && aimList[i - x] < result) {
                 switch (i) {
-                    case 0 -> currentType = Weapon.ShotBehaviour.MISS;
-                    case 1 -> currentType = Weapon.ShotBehaviour.GRAZE;
-                    case 2 -> currentType = Weapon.ShotBehaviour.HIT;
+                    case 0 -> currentType = MISS;
+                    case 1 -> currentType = GRAZE;
+                    case 2 -> currentType = HIT;
                 }
                 System.out.println("The number is in aimList[" + i + "].");
                 break; // Exit loop once match is found
             }
         }
-        // Apply upgrade or downgrade logic
+
         if (doesUpgrade && !doesDowngrade) {
             // if upgrade and downgrade are both true, ignore them because they cancel each other out
-            return Weapon.shotUpgradeMap.get(currentType); // Upgrade shot type +1
+            return shotUpgradeMap.get(currentType); // upgrade shot type +1
         } else if (!doesUpgrade && doesDowngrade) {
-            return Weapon.shotDowngradeMap.get(currentType); // Downgrade shot type -1
+            return shotDowngradeMap.get(currentType); // downgrade shot type -1
         }
 
-        // Return the current shot type if neither upgrade nor downgrade is applied
         return currentType;
     }
 }

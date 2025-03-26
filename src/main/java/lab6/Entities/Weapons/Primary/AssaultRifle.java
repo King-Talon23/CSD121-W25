@@ -1,13 +1,12 @@
-package TK.Entities.Weapons.Primary;
+package lab6.Entities.Weapons.Primary;
 
-import TK.Entities.Weapons.Range;
-import TK.Entities.Weapons.Weapon;
-import TK.Entities.Weapons.WeaponTier;
+
+import lab6.Entities.Weapons.*;
+import static lab6.Entities.Weapons.WeaponTier.*;
 
 import java.util.Map;
 
-import static TK.Entities.Weapons.WeaponTier.*;
-import static TK.game.game.getRandomListItem;
+
 
 public class AssaultRifle extends Weapon {
     public AssaultRifle(WeaponTier weaponTier) {
@@ -16,7 +15,7 @@ public class AssaultRifle extends Weapon {
 
     @Override
     public String getSound() {
-        return getRandomListItem(heavyGunSounds);
+        return "";
     }
 
     @Override
@@ -27,12 +26,12 @@ public class AssaultRifle extends Weapon {
                 PLASMA, "Plasma Rifle"
         );
 
-        return shotgunNames.get(this.weaponTier);
+        return shotgunNames.get(weaponTier);
     }
 
     @Override
     public Integer getBaseDamage() {
-        return switch (this.weaponTier) {
+        return switch (weaponTier) {
             case CONVENTIONAL -> 3;
 
             case MAGNETIC -> 5;
@@ -52,7 +51,8 @@ public class AssaultRifle extends Weapon {
         return 0;
     }
 
-    public static Integer getDamageOnCrit() {
+    @Override
+    public Integer getDamageOnCrit() {
         return switch (weaponTier) {
             case CONVENTIONAL -> 2;
 
@@ -75,11 +75,6 @@ public class AssaultRifle extends Weapon {
     @Override
     public Integer getAimBonus() {
         return 0;
-    }
-
-    @Override
-    public Range getEffectiveRange() {
-        return Range.MEDIUM;
     }
 
     @Override

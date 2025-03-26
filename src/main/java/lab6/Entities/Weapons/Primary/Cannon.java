@@ -1,13 +1,13 @@
-package TK.Entities.Weapons.Primary;
+package lab6.Entities.Weapons.Primary;
 
-import TK.Entities.Weapons.Range;
-import TK.Entities.Weapons.Weapon;
-import TK.Entities.Weapons.WeaponTier;
+import lab6.Entities.Weapons.Weapon;
+import lab6.Entities.Weapons.WeaponTier;
+import static lab6.Entities.Weapons.WeaponTier.*;
+import static lab6.Utility.GetRandom.StringListItem;
 
 import java.util.Map;
 
-import static TK.Entities.Weapons.WeaponTier.*;
-import static TK.game.game.getRandomListItem;
+
 
 public class Cannon extends Weapon {
     public Cannon(WeaponTier weaponTier) {
@@ -16,7 +16,7 @@ public class Cannon extends Weapon {
 
     @Override
     public String getSound() {
-        return GetRandom.ListItem(heavyGunSounds);
+        return "";
     }
 
     @Override
@@ -76,11 +76,6 @@ public class Cannon extends Weapon {
     @Override
     public Integer getAimBonus() {
         return 0;
-    }
-
-    @Override
-    public Range getEffectiveRange() {
-        return Range.MEDIUM;
     }
 
     @Override

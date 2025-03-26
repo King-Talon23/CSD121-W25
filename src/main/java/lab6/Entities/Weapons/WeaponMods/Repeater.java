@@ -8,7 +8,6 @@ public class Repeater extends WeaponMod{
     @Override
     public Integer applyEffect() {
         return (this.tier.ordinal() + 1) * 5; // 5-10-15
-
     }
 
     @Override

@@ -1,15 +1,15 @@
 package lab6.game.Items.Consumable.explosiveItems;
 
 import lab6.Entities.Entity;
+import lab6.Utility.GetRandom;
 import lab6.game.Items.Item;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static lab6.Entities.Cover.FLANKED;
-import static lab6.Entities.Cover.explosionCoverMap;
-import static lab6.game.game.*;
+import static lab6.Entities.SoldierStuff.Cover.FLANKED;
+import static lab6.Entities.SoldierStuff.Cover.explosionCoverMap;
 
 public abstract class ExplosiveItem extends Item {
     Integer lowEndDamage;
@@ -24,30 +24,11 @@ public abstract class ExplosiveItem extends Item {
 
     @Override
     public void useItem(Entity user){
-        println(this.sound);
-        int damage = getRandomIntInRange(lowEndDamage, highEndDamage);
-        Entity[] affected = room[room_number];
-        for (int i = 0; i < affected.size(); i++) {
-            Entity enemy = affected.get(i);
-            try {
-                enemy.hp -= damage;
-                if (enemy.cover != FLANKED) { // destroy enemy cover
-                    enemy.cover = explosionCoverMap.get(enemy.cover);
-                }
-                int[] loot = getLoot(enemy);
-                gunFragments += loot[0];
-                elerium += loot[1];
-                meld += loot[2];
-                alloy += loot[3];
-                enemy.isDead();
-            } catch (IndexOutOfBoundsException e) {
-                break;  // Exit the loop if index is out of range
-            }
-        }
+
     }
 
     private String getSound(){
-        return getRandomListItem(explosiveSounds);
+        return GetRandom.StringListItem(explosiveSounds);
     }
 
     private static final List<String> explosiveSounds = new ArrayList<>(Arrays.asList(

@@ -1,6 +1,6 @@
 package lab6.game.StatusEffects;
 
-import static lab6.game.game.getRandomIntInRange;
+import lab6.Utility.GetRandom;
 
 public class ChryssalidPoison extends StatusEffect implements StatusEffect.DamageEffect {
     public ChryssalidPoison() {
@@ -10,7 +10,7 @@ public class ChryssalidPoison extends StatusEffect implements StatusEffect.Damag
 
     @Override
     public int getDamage() {
-        return getRandomIntInRange(1,3);
+        return GetRandom.IntInRange(1,3);
     }
 
 

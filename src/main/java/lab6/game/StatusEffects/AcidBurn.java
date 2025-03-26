@@ -1,5 +1,5 @@
 package lab6.game.StatusEffects;
-import static lab6.game.game.getRandomIntInRange;
+import lab6.Utility.GetRandom;
 
 public class AcidBurn extends StatusEffect implements StatusEffect.DamageEffect {
     public AcidBurn() {
@@ -8,7 +8,7 @@ public class AcidBurn extends StatusEffect implements StatusEffect.DamageEffect 
 
     @Override
     public int getDamage() {
-        return getRandomIntInRange(1,3);
+        return GetRandom.IntInRange(1,3);
     }
 
     @Override

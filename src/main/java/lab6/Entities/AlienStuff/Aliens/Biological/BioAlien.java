@@ -10,7 +10,7 @@ import java.util.List;
 public abstract class BioAlien extends Alien {
 
     public BioAlien(Integer hp, Integer aim, Integer mobility, Integer dodge, Integer will, Integer defense, Integer hack, Integer armour, Weapon weapon, List<Item> items, Integer xpWorth) {
-        super(hp, aim, mobility, dodge, will, defense, hack, armour, weapon, items, xpWorth);
+        super(items);
     }
 
     @Override
