@@ -6,7 +6,6 @@ import lab6.Entities.Weapons.Weapon;
 import lab6.Utility.GetRandom;
 import lab6.Entities.Weapons.Primary.AssaultRifle;
 import lab6.Entities.Weapons.WeaponTier;
-import lab6.Entities.SoldierStuff.SoliderAttributes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,7 +23,7 @@ public class Soldier extends Entity {
     Integer xp;
 
     public Soldier(ClassType SoliderClass) { // always creates a rookie
-        super(null);
+        super();
         this.rank = Rank.ROOKIE;
         this.classType = SoliderClass;
     }
@@ -105,7 +104,7 @@ public class Soldier extends Entity {
         this.hp = setHealth(this.rank, this.classType);
         this.aim = setAim(this.rank, this.classType);
         this.hack = setHack(this.rank, this.classType);
-        this.will = Math.min((this.will + GetRandom.IntInRange(4, 12)), 100);
+        this.will = Math.min((this.will + GetRandom.intInRange(4, 12)), 100);
 
         if (this.rank == Rank.SQUADDIE) {
             // assign class weapons upon reaching second rank

@@ -30,6 +30,7 @@ public class a0_OpeningCutscene {
         mediaPlayer.setOnEndOfMedia(() -> { // video plays fully
             videoOver(mediaPlayer, primaryStage);
         });
+
         mediaPlayer.setOnError(() -> { // cutscene doesnt load
 
             //reset mediaPlayer if the video doesnt load properly
@@ -55,13 +56,12 @@ public class a0_OpeningCutscene {
         root.setBottom(skipButton);
         skipButton.setAlignment(Pos.BOTTOM_CENTER);
         root.setStyle("-fx-background-color: black");
-        return new Scene(root, 800, 800);
+        return new Scene(root);
     }
 
-    private static void videoOver(MediaPlayer mediaPlayer, Stage primaryStage) {
+    private static void videoOver( MediaPlayer mediaPlayer, Stage primaryStage) {
         mediaPlayer.dispose();
-        Scene chooseCharacterScene = missionBriefing(primaryStage, null);
-        primaryStage.setScene(chooseCharacterScene);
-        primaryStage.setFullScreen(true);
+        BorderPane missionBrief = missionBriefing(primaryStage, null);
+        primaryStage.getScene().setRoot(missionBrief);
     }
 }

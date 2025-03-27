@@ -10,7 +10,7 @@ public class Burning extends StatusEffect implements StatusEffect.DamageEffect {
 
     @Override
     public int getDamage() {
-        return GetRandom.IntInRange(1,3);
+        return GetRandom.intInRange(1,3);
     }
 
 

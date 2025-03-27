@@ -1,12 +1,14 @@
 package lab6.Entities;
 
 import lab6.Entities.SoldierStuff.Cover;
+import lab6.Utility.CycleThrough;
 import lab6.Utility.GetRandom;
 import lab6.game.Items.Item;
 import lab6.Entities.Weapons.Weapon;
-import lab6.Entities.Weapons.Weapon.*;
 import lab6.game.StatusEffects.StatusEffect;
 import lab6.Entities.Weapons.ShotBehaviour;
+import lab6.game.StatusEffects.Stunned;
+
 import static lab6.Entities.SoldierStuff.Cover.*;
 import static lab6.Entities.Weapons.ShotBehaviour.*;
 
@@ -24,16 +26,14 @@ public abstract class Entity {
     public Integer cover;
     public Integer armour;
     public Weapon weapon;
-    public List<Item> items;
     public boolean isAlive;
+    public boolean hasTurn;
+    public Integer actionPoints;
     public List<StatusEffect> currentEffects;
 
     public Cover coverType;
 
-    Integer GRAZE_CHANCE = 20;
-
-
-    public Entity(List<Item> items) {
+    public Entity() {
         this.hp = getHP();
         this.aim = getAim();
         this.mobility = getMobility();
@@ -43,10 +43,11 @@ public abstract class Entity {
         this.defense = getDefense();
         this.armour = getArmour();
         this.weapon = getWeapon();
-        this.items = items;
         this.coverType = NONE;
         this.cover = coverValue.get(this.coverType);
+        this.actionPoints = 2;
         this.isAlive = true;
+        this.hasTurn = true;
     }
 
     public abstract Integer getDodge();
@@ -67,6 +68,9 @@ public abstract class Entity {
 
     public abstract Integer getArmour();
 
+    public void resetActionPoints() {
+        this.actionPoints = 2;
+    }
 
     public Boolean isDead() {
         return this.hp <= 0;
@@ -86,15 +90,15 @@ public abstract class Entity {
     public void shootAtTarget(Entity target) {
         int[] aimResults = aimAtTarget(target);
         // doesDodge decreases the shot type from crit->hit->graze->miss
-        boolean doesDodge = false;
-        if (aimResults[2] < 100) {  // always false if entity has a 100% chanceToHit
-            doesDodge = GetRandom.IntInRange(1, 100) <= target.dodge;
+        boolean doesDodge = false; // always false if entity has a 100% chanceToHit
+        if (aimResults[2] < 100) {
+            doesDodge = GetRandom.intInRange(1, 100) <= target.dodge;
         }
 
         // doesCrit increases the shot type from miss->graze->hit->crit
-        boolean doesCrit = GetRandom.IntInRange(1, 100) <= this.weapon.getTrueCritChance();
+        boolean doesCrit = GetRandom.intInRange(1, 100) <= this.weapon.critChance;
 
-        int shotResult = GetRandom.IntInRange(1, 100);
+        int shotResult = GetRandom.intInRange(1, 100);
         ShotBehaviour shotType = getShotType(shotResult, aimResults, doesCrit, doesDodge);
         if (shotType != MISS) {
             Integer damage = shotTypeMap.get(shotType);
@@ -124,9 +128,13 @@ public abstract class Entity {
 
     public int[] aimAtTarget(Entity target) {
         int[] finalResult = new int[3];
+        int GRAZE_CHANCE = 0;
 
         int hitChance = (this.aim + this.weapon.aimBonus) - (target.cover + target.defense);
-        hitChance -= 10; // half of graze chance is represented by the 10 lowest values of the hitChance
+        if (hitChance >= 20) { // cannot graze with a hitchance below 20
+            GRAZE_CHANCE = 20;
+            hitChance -= 10; // half of graze chance is represented by the 10 lowest values of the hitChance
+        }
         hitChance = Math.max(0, Math.min(hitChance, 100));
 
         int missChance = 100 - (GRAZE_CHANCE + hitChance);
@@ -156,19 +164,16 @@ public abstract class Entity {
          * @param doesDowngrade true if the enemy dodges, shot type is  downgraded.
          * @return The determined ShotBehaviour value after applying upgrade or downgrade.
          */
-        ShotBehaviour currentType = null; // Variable to store the current shot type
+        ShotBehaviour currentType = null;
 
-        // Determine current shot type based on result
         for (int i = 0; i < aimList.length; i++) {
-            int x = (i > 0) ? 1 : 0;
-            if (result <= aimList[i] && aimList[i - x] < result) {
+            if (result <= aimList[i]) {
                 switch (i) {
                     case 0 -> currentType = MISS;
                     case 1 -> currentType = GRAZE;
                     case 2 -> currentType = HIT;
                 }
-                System.out.println("The number is in aimList[" + i + "].");
-                break; // Exit loop once match is found
+                break;
             }
         }
 

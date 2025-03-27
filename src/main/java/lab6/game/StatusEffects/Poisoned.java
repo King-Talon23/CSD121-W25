@@ -5,7 +5,7 @@ import lab6.Utility.GetRandom;
 public class Poisoned extends StatusEffect implements StatusEffect.DamageEffect, StatusEffect.StatEffect {
     public Poisoned() {
         // lasts between 3 and 5 turns, unless cured
-        super(GetRandom.IntInRange(3,5));
+        super(GetRandom.intInRange(3,5));
     }
 
     @Override

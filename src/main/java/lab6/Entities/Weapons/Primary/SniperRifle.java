@@ -26,7 +26,7 @@ public class SniperRifle extends Weapon {
                 PLASMA, "Plasma Lance"
         );
 
-        return swordNames.get(this.weaponTier);
+        return swordNames.get(weaponTier);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class SniperRifle extends Weapon {
 
     @Override
     public Integer getBaseDamage() {
-        return switch (this.weaponTier) {
+        return switch (weaponTier) {
             case CONVENTIONAL -> 4;
             case MAGNETIC -> 6;
             case PLASMA -> 8;
@@ -50,7 +50,7 @@ public class SniperRifle extends Weapon {
 
     @Override
     public Integer getDamageOnCrit() {
-        return switch (this.weaponTier) {
+        return switch (weaponTier) {
             case CONVENTIONAL -> 2;
             case MAGNETIC -> 3;
             case PLASMA -> 4;

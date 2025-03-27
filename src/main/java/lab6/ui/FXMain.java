@@ -15,6 +15,8 @@ public class FXMain extends Application {
         primaryStage.setTitle("XCOM 2: Testing");
         primaryStage.setScene(scene);
         primaryStage.setFullScreen(true);
+        primaryStage.setResizable(false);
+        primaryStage.centerOnScreen();
         primaryStage.setFullScreenExitHint(""); // clear the "press esc" hint
 
         primaryStage.show();

@@ -4,10 +4,8 @@ import lab6.Entities.Weapons.WeaponMods.WeaponMod;
 import lab6.Entities.Weapons.WeaponMods.*;
 import lab6.Utility.GetRandom;
 import lab6.Utility.CycleThrough;
-import static lab6.Entities.Weapons.ShotBehaviour.*;
 
 import java.util.List;
-import java.util.Map;
 
 
 public abstract class Weapon {
@@ -19,6 +17,7 @@ public abstract class Weapon {
     public Integer armourShredding;
     public Integer aimBonus;
     public Integer freeReloads;
+    public Integer critChance;
 
     public List<WeaponMod> weaponMods;
 
@@ -29,7 +28,8 @@ public abstract class Weapon {
         this.ammo = getTrueClipSize();
         this.clipSize = getTrueClipSize();
         this.armourShredding = getArmourShredding();
-        this.aimBonus = getTrueAimBonus();
+        this.aimBonus = getAimBonus() + CycleThrough.mods(Scope.class, weaponMods); // scope increases aim
+        this.critChance = getCritChance() + CycleThrough.mods(LaserSight.class, weaponMods); // laser sight increases crit chance
     }
 
     public void reload() {
@@ -38,7 +38,7 @@ public abstract class Weapon {
 
     public Integer normalShot() {
         // damage range is between base damage and the damage spread added to the base
-        return GetRandom.IntInRange(getBaseDamage(), (getBaseDamage() + getDamageSpread()));
+        return GetRandom.intInRange(getBaseDamage(), (getBaseDamage() + getDamageSpread()));
     }
 
     public Integer critShot() {
@@ -47,24 +47,18 @@ public abstract class Weapon {
     }
 
     public Integer grazedShot() {
-        // one quarter of normal damage inflicted on dodge/graze
-        return normalShot() / 4;
+        // half of normal damage inflicted on graze
+        return normalShot() / 2;
     }
 
-
-    public Integer getTrueAimBonus() {
-        return (getAimBonus() + CycleThrough.mods(Scope.class, weaponMods));
-    }
-
-    public Integer getTrueCritChance() {
-        return getCritChance() + CycleThrough.mods(LaserSight.class, weaponMods);
-    }
 
     public Integer getMissedShotDamage() {
+        // stock provides damage on missed shots
         return CycleThrough.mods(Stock.class, weaponMods);
     }
 
     public Integer getTrueClipSize() {
+        // extended mag increases clip size
         return getClipSize() + CycleThrough.mods(ExtendedMagazine.class, weaponMods);
     }
 
@@ -73,6 +67,7 @@ public abstract class Weapon {
     }
 
     public Integer getFreeReloads() {
+        //auto-loaders gives a num of reloads that dont cost an action point
         return CycleThrough.mods(AutoLoader.class, weaponMods);
     }
 

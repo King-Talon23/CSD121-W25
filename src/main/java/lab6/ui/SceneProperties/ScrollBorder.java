@@ -19,12 +19,11 @@ public class ScrollBorder {
 
     private static Text createTextBorder() {
         Text border = new Text();
-        //* make text size 8, font Consolas, bold, white and have a black background
+        // make text size 8, font Consolas, bold, white and have a black background
         border.setStyle("-fx-font-size: 8px; -fx-font-family: Consolas;" +
                 "-fx-font-weight: Bold;-fx-background-color: Black");
         border.setTextAlignment(TextAlignment.CENTER);
         border.setFill(Color.WHITE);
-
         return border;
     }
 
@@ -70,38 +69,38 @@ public class ScrollBorder {
 
     private static String[][] getBorderType(BorderType borderType) {
         return switch (borderType) {
-            case REGULAR -> new String[][] { // regular
-                        {"//\\/\\\\", "//\\  /\\\\", "<|(> () <)|>", "\\\\/  \\//", "\\\\/\\//"},
-                        {"/  \\", "/ /\\ \\", "\\ \\/ /", "\\  /", "//\\\\"},
-                        {"/  \\", "/ /\\ \\", "(  ()  )", "\\ \\/ /", "\\  /"},
-                        {"\\\\//", "/  \\", "/ /\\ \\", " \\ \\/ /", "\\  /"}
-                };
-            /** used this website to complete all borders except regular
-            // https://patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20 - font = big money ne/nw
-
-            // The lists and upsidesDowns and backwards because of how the conveyor Effect loads the strings
-             **/
-            case WIN -> new String[][] { // on player win
-
-                };
-            case LOSE -> new String[][] { // On player loss
-
-                };
-            case XCOM -> new String[][] { // Player turn
-                    {"__/     |__/", "| $$ \\/  | $$","| $$\\  $ | $$","| $$  $$$| $$","| $$ $$/$$ $$",
-                            "| $$$$  /$$$$", "| $$$    /$$$", " /$$      /$$"}, // M
-                    {"\\______/","|  $$$$$$/", "| $$  | $$","| $$  | $$","| $$  | $$","| $$  \\ $$"," /$$__  $$"," /$$$$$$",},  // O
-                    {"\\______/", "|  $$$$$$/","| $$    $$","| $$     ","| $$     ","| $$  \\__/"," /$$__  $$","  /$$$$$$"},  // C
-                    {"|__/  |__/", "| $$  \\ $$"," /$$/\\  $$","$$  $$"," \\  $$$$/,",
-                            "|  $$/ $$/","| $$  / $$", " /$$   /$$","=============="}  // X
+            case REGULAR -> new String[][]{ // regular
+                    {"//\\/\\\\", "//\\  /\\\\", "<|(> () <)|>", "\\\\/  \\//", "\\\\/\\//"},
+                    {"/  \\", "/ /\\ \\", "\\ \\/ /", "\\  /", "//\\\\"},
+                    {"/  \\", "/ /\\ \\", "(  ()  )", "\\ \\/ /", "\\  /"},
+                    {"\\\\//", "/  \\", "/ /\\ \\", " \\ \\/ /", "\\  /"}
             };
-            case ALIEN -> new String[][] { // Alien turn
-                    {"/\\", "/  \\", "/ /\\ \\", "/ ____ \\", "/_/    \\_\\"},  // A
-                    {"| |     ", "| |     ", "| |     ", "| |____", "|______|"},  // L
-                    {"|_   _|", "| |", "| |", "_| |_", "|_____|"},  // I
-                    {"|  ____|", "| |__   ", "|  __| ", "| |____", "|______|"},  // E
-                    {"|  \\    ", "| \\    _ ", "   \\/| |", "     | |", "     |_|"}  // N
+            /** used this website to complete all borders except regular
+             // https://patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20 - font = big money ne
 
+             // The lists and upsidesDowns and backwards because of how the conveyor Effect loads the strings
+             **/
+            case WIN -> new String[][]{ // on player win
+
+            };
+            case LOSE -> new String[][]{ // On player loss
+
+            };
+            case XCOM -> new String[][]{ // Player turn
+                    {"__/     |__/", "| $$ \\/  | $$", "| $$\\  $ | $$", "| $$  $$$| $$", "| $$ $$/$$ $$",
+                            "| $$$$  /$$$$", "| $$$    /$$$", " /$$      /$$"}, // M
+                    {"\\______/", "|  $$$$$$/", "| $$  | $$", "| $$  | $$", "| $$  | $$", "| $$  \\ $$", " /$$__  $$", " /$$$$$$",},  // O
+                    {"\\______/", "|  $$$$$$/", "| $$    $$", "| $$     ", "| $$     ", "| $$  \\__/", " /$$__  $$", "  /$$$$$$"},  // C
+                    {"|__/  |__/", "| $$  \\ $$", " /$$/\\  $$", "$$  $$", " \\  $$$$/,",
+                            "|  $$/ $$/", "| $$  / $$", " /$$   /$$", "=============="}  // X
+            };
+            case ALIEN -> new String[][]{ // Alien turn
+                    {" \\______/ ", "|  $$$$$$/", " /$$  \\ $$", " \\____  $$", "|  $$$$$$ ", "| $$  \\__/", " /$$__  $$", "  /$$$$$$ "},  // S
+                    {"|__/  \\__/", "| $$ \\  $$", "| $$\\  $$$", "| $$  $$$$", "| $$ $$ $$", "| $$$$| $$", "| $$$ | $$", " /$$   /$$"},  // N
+                    {"|______/  ", " /$$$$$$  ", "  | $$    ", "  | $$    ", "  | $$    ", "  | $$    ", "|_  $$_/  ", " /$$$$$$  "},  // I
+                    {"|________/", "| $$$$$$$$", "| $$      ", "| $$__/   ", "| $$$$$   ", "| $$      ", "| $$_____/", " /$$$$$$$$"},  // E
+                    {"|________/", "| $$$$$$$$", "| $$      ", "| $$      ", "| $$      ", "| $$      ", "| $$      ", " /$$      "},  // L
+                    {"|__/  |__/", "| $$  | $$", "| $$  | $$", "| $$__  $$", "| $$$$$$$$", "| $$  \\ $$", " /$$__  $$", "  /$$$$$$ ", "=============="}  // A
             };
         };
 

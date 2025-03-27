@@ -4,7 +4,8 @@ import java.util.*;
 
 public class GetRandom {
     static Random rd = new Random();
-    public static int IntInRange(int min, int max) {
+
+    public static int intInRange(int min, int max) {
         if (min > max) {
             throw new IllegalArgumentException("Minimum cannot be higher than maximum");
         }
