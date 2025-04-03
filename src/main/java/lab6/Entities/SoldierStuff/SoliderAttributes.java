@@ -6,7 +6,7 @@ import lab6.Entities.Weapons.WeaponTier;
 
 import java.util.*;
 
-import static lab6.Entities.SoldierStuff.SoliderAttributes.Rank.*;
+import static  lab6.Entities.SoldierStuff.SoliderAttributes.Rank.*;
 
 public class SoliderAttributes {
 
@@ -26,7 +26,8 @@ public class SoliderAttributes {
             ClassType.SHARPSHOOTER, new SniperRifle(WeaponTier.CONVENTIONAL)
     );
 
-    public static Map<Rank, Rank> rankMap = new HashMap<> ();
+    public static Map<Rank, Rank> rankMap = new HashMap<>();
+
     static {
         rankMap.put(ROOKIE, SQUADDIE);
         rankMap.put(SQUADDIE, CORPORAL);
@@ -37,9 +38,6 @@ public class SoliderAttributes {
         rankMap.put(MAJOR, COLONEL);
     }
 
-    /**
-     * All of these stats are the real Values used in XCOM 2
-     */
     private static final int[][] AIM = {
             // specialist - grenadier - ranger - sharpshooter
             {65, 65, 65, 65}, // Rookie
@@ -74,16 +72,16 @@ public class SoliderAttributes {
             {80, 20, 20, 20}
     };
 
-    public static int setAim(Rank rank, ClassType classType) {
-        return AIM[rank.ordinal()][classType.ordinal()];
+    public static int setAim(int rank, int classType) {
+        return AIM[rank][classType];
     }
 
-    public static int setHealth(Rank rank, ClassType classType) {
-        return HEALTH[rank.ordinal()][classType.ordinal()];
+    public static int setHealth(int rank, int classType) {
+        return HEALTH[rank][classType];
     }
 
-    public static int setHack(Rank rank, ClassType classType) {
-        return HACK[rank.ordinal()][classType.ordinal()];
+    public static int setHack(int rank, int classType) {
+        return HACK[rank][classType];
     }
 
 }

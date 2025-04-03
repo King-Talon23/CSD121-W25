@@ -12,12 +12,11 @@ public class FXMain extends Application {
     @Override
     public void start(Stage primaryStage) {
         Scene scene = getOpeningScene(primaryStage);
-        primaryStage.setTitle("XCOM 2: Testing");
+        primaryStage.setTitle("XCOM 2: Enemy Unknown");
         primaryStage.setScene(scene);
         primaryStage.setFullScreen(true);
-        primaryStage.setResizable(false);
         primaryStage.centerOnScreen();
-        primaryStage.setFullScreenExitHint(""); // clear the "press esc" hint
+        primaryStage.setFullScreenExitHint(""); // clear the "press esc" full screen hint
 
         primaryStage.show();
     }

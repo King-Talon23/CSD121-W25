@@ -11,6 +11,7 @@ import java.util.Map;
 public class AssaultRifle extends Weapon {
     public AssaultRifle(WeaponTier weaponTier) {
         super(weaponTier);
+        this.weaponTier = weaponTier;
     }
 
     @Override
@@ -26,17 +27,19 @@ public class AssaultRifle extends Weapon {
                 PLASMA, "Plasma Rifle"
         );
 
-        return shotgunNames.get(weaponTier);
+        return shotgunNames.get(this.weaponTier);
     }
 
     @Override
     public Integer getBaseDamage() {
-        return switch (weaponTier) {
+        return switch (this.weaponTier) {
             case CONVENTIONAL -> 3;
 
             case MAGNETIC -> 5;
 
             case PLASMA -> 7;
+
+            case null -> 0;
         };
 
     }
@@ -59,17 +62,14 @@ public class AssaultRifle extends Weapon {
             case MAGNETIC -> 3;
 
             case PLASMA -> 4;
+
+            case null -> 0;
         };
     }
 
     @Override
     public Integer getDamageSpread() {
         return 2;
-    }
-
-    @Override
-    public Integer getPlusOneChance() {
-        return 0;
     }
 
     @Override

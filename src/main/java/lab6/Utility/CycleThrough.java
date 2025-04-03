@@ -9,9 +9,11 @@ public class CycleThrough {
 
     public static Integer mods(Class<? extends WeaponMod> modClass, List<WeaponMod> weaponMods) {
         // returns 0 if the player doesnt have the required mod
-        for (WeaponMod mod : weaponMods) {
-            if (modClass.isInstance(mod)) {
-                return mod.applyEffect();
+        if (weaponMods != null) {
+            for (WeaponMod mod : weaponMods) {
+                if (modClass.isInstance(mod)) {
+                    return mod.applyEffect();
+                }
             }
         }
         return 0;

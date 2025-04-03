@@ -8,9 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static lab6.Entities.SoldierStuff.Cover.FLANKED;
-import static lab6.Entities.SoldierStuff.Cover.explosionCoverMap;
-
 public abstract class ExplosiveItem extends Item {
     Integer lowEndDamage;
     Integer highEndDamage;
@@ -28,7 +25,7 @@ public abstract class ExplosiveItem extends Item {
     }
 
     private String getSound(){
-        return GetRandom.StringListItem(explosiveSounds);
+        return GetRandom.stringListItem(explosiveSounds);
     }
 
     private static final List<String> explosiveSounds = new ArrayList<>(Arrays.asList(

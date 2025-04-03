@@ -4,7 +4,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.scene.text.TextAlignment;
 
-public class BillboardHeading {
+public class HeadingDisplay {
     public static TextFlow heading(String inputText) {
         TextFlow textFlow = new TextFlow();
         textFlow.setTextAlignment(TextAlignment.CENTER);

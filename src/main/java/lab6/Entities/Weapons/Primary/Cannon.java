@@ -27,17 +27,19 @@ public class Cannon extends Weapon {
                 PLASMA, "Beam Cannon"
         );
 
-        return shotgunNames.get(weaponTier);
+        return shotgunNames.get(this.weaponTier);
     }
 
     @Override
     public Integer getBaseDamage() {
-        return switch (weaponTier) {
+        return switch (this.weaponTier) {
             case CONVENTIONAL -> 4;
 
             case MAGNETIC -> 6;
 
             case PLASMA -> 8;
+
+            case null -> 0;
         };
 
     }
@@ -54,23 +56,20 @@ public class Cannon extends Weapon {
 
     @Override
     public Integer getDamageOnCrit() {
-        return switch (weaponTier) {
+        return switch (this.weaponTier) {
             case CONVENTIONAL -> 2;
 
             case MAGNETIC -> 3;
 
             case PLASMA -> 4;
+            
+            case null -> 0;
         };
     }
 
     @Override
     public Integer getDamageSpread() {
         return 2;
-    }
-
-    @Override
-    public Integer getPlusOneChance() {
-        return 0;
     }
 
     @Override
@@ -81,10 +80,7 @@ public class Cannon extends Weapon {
     @Override
     public Integer getArmourShredding() {
         // Cannon shreds +1 armor each tier
-        // CONVENTIONAL -> 1
-        // MAGNETIC -> 2
-        // PLASMA -> 3
-        return weaponTier.ordinal() + 1;
+        return this.weaponTier.ordinal() + 1;
     }
 
 

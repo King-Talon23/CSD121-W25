@@ -1,17 +1,16 @@
 package lab6.ui.Scenes;
 
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.scene.control.Button;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import lab6.Entities.AlienStuff.Alien;
+import lab6.Entities.SoldierStuff.Cover;
 import lab6.Entities.SoldierStuff.Soldier;
 import lab6.Utility.GetRandom;
 
@@ -19,7 +18,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static lab6.ui.SceneProperties.BillboardHeading.heading;
+import static lab6.Entities.SoldierStuff.Cover.*;
+import static lab6.ui.SceneProperties.HeadingDisplay.heading;
 import static lab6.ui.SceneProperties.ScrollBorder.BorderType.*;
 import static lab6.ui.SceneProperties.ScrollBorder.scrollBorder;
 
@@ -40,20 +40,21 @@ public class a2_CombatScene {
         VBox mainText = new VBox();
         mainText.setAlignment(Pos.CENTER);
 
-
         TextFlow mainTop = new TextFlow(topPlaceHolder); // this will house character voice lines
         TextFlow mainBottom = new TextFlow(bottomPlaceHolder); // this will have game descriptions
 
         mainTop.setTextAlignment(TextAlignment.CENTER);
 
-        mainBottom.setStyle("-fx-font-weight: bold; -fx-font-size: 15pt");
+        mainBottom.setStyle("-fx-font-weight: bold; -fx-font-size: 15; pt-fx-border-color: white");
+        mainTop.setStyle("-fx-font-weight: bold; -fx-font-size: 15; pt-fx-border-color: white");
         mainBottom.setTextAlignment(TextAlignment.CENTER);
 
-        mainText.getChildren().addAll(mainTop, mainBottom);
+        mainText.setFillWidth(true);
+
         mainTop.autosize();
         mainBottom.autosize();
 
-        TextFlow heading = heading(operationName());
+        TextFlow heading = heading(operationName()); // create heading with random title
 
         root.setCenter(mainText);
         root.setLeft(leftBorder);
@@ -64,8 +65,27 @@ public class a2_CombatScene {
         return root;
     }
 
-    private void playerTurn(BorderPane root, List<Soldier> squad, List<Alien> enemies) {
+    private void playerTurn(VBox Vbox, BorderPane root, List<Soldier> squad, List<Alien> enemies) {
+        root.setLeft(scrollBorder(XCOM));
+        root.setRight(scrollBorder(XCOM));
+        // root.setBottom(Button panel);
+        for (Soldier soldier : squad) {
+            if (!soldier.isAlive) {
+                squad.remove(soldier);
+                continue;
+            }
+            if (soldier.hunkerBonus) {
+                soldier.removeHunkerBonus();
+            }
+            soldier.resetActionPoints();
+            if (soldier.hasTurn) {
 
+                soldier.actionPoints--;
+                if (soldier.actionPoints <= 0) {
+                    soldier.hasTurn = false;
+                }
+            }
+        }
     }
 
     private static String operationName() { // the title for the header
@@ -101,9 +121,9 @@ public class a2_CombatScene {
                 "Friendship", "Kindness", "Love", "Courage", "Wisdom", "Hope", "Strength", "Adventure"
         ));
 
-        String adjective = GetRandom.StringListItem(adjectives);
-        String noun = GetRandom.StringListItem(nouns);
-        return String.format("Operation %s %s",adjective, noun);
+        String adjective = GetRandom.stringListItem(adjectives);
+        String noun = GetRandom.stringListItem(nouns);
+        return String.format("Operation %s %s", adjective, noun);
 
     }
 

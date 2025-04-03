@@ -37,7 +37,7 @@ public class ScrollBorder {
         text.setWrappingWidth(100);
 
         Timeline timeline = new Timeline(
-                new KeyFrame(Duration.seconds(0.03333), event -> { // 30 fps
+                new KeyFrame(Duration.seconds(0.03333), _ -> { // ~30 fps
                     String currentText = text.getText();
                     String[] lines = currentText.split("\n");
 
@@ -78,7 +78,7 @@ public class ScrollBorder {
             /** used this website to complete all borders except regular
              // https://patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20 - font = big money ne
 
-             // The lists and upsidesDowns and backwards because of how the conveyor Effect loads the strings
+             // The lists and upsidesDowns and backwards because of how the Conveyor Effect loads the strings
              **/
             case WIN -> new String[][]{ // on player win
 
@@ -103,7 +103,6 @@ public class ScrollBorder {
                     {"|__/  |__/", "| $$  | $$", "| $$  | $$", "| $$__  $$", "| $$$$$$$$", "| $$  \\ $$", " /$$__  $$", "  /$$$$$$ ", "=============="}  // A
             };
         };
-
     }
 
     private static String centerText(String text) {

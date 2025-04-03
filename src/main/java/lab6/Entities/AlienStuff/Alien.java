@@ -8,11 +8,8 @@ import lab6.game.Items.Item;
 import java.util.List;
 
 public abstract class Alien extends Entity {
-
-
     public Alien() {
         super();
-
         this.dodge = getDodge();
     }
     public abstract String getName();

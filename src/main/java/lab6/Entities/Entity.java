@@ -1,13 +1,11 @@
 package lab6.Entities;
 
 import lab6.Entities.SoldierStuff.Cover;
-import lab6.Utility.CycleThrough;
 import lab6.Utility.GetRandom;
-import lab6.game.Items.Item;
 import lab6.Entities.Weapons.Weapon;
 import lab6.game.StatusEffects.StatusEffect;
 import lab6.Entities.Weapons.ShotBehaviour;
-import lab6.game.StatusEffects.Stunned;
+import org.jetbrains.annotations.NotNull;
 
 import static lab6.Entities.SoldierStuff.Cover.*;
 import static lab6.Entities.Weapons.ShotBehaviour.*;
@@ -15,30 +13,30 @@ import static lab6.Entities.Weapons.ShotBehaviour.*;
 import java.util.*;
 
 public abstract class Entity {
-    public Integer hp;
+    public int hp;
     public Integer aim;
     public Integer mobility;
     public Integer hack;
     public Integer dodge;
     public Integer will;
     public Integer defense;
-
     public Integer cover;
     public Integer armour;
     public Weapon weapon;
     public boolean isAlive;
+
     public boolean hasTurn;
+    public boolean hunkerBonus;
     public Integer actionPoints;
     public List<StatusEffect> currentEffects;
-
     public Cover coverType;
 
     public Entity() {
-        this.hp = getHP();
+        this.hp = getMaxHP();
         this.aim = getAim();
         this.mobility = getMobility();
         this.dodge = getDodge();
-        this.hack = getHack();
+        this.hack = getMaxHack();
         this.will = getWill();
         this.defense = getDefense();
         this.armour = getArmour();
@@ -48,6 +46,32 @@ public abstract class Entity {
         this.actionPoints = 2;
         this.isAlive = true;
         this.hasTurn = true;
+        this.hunkerBonus = false;
+    }
+
+    public void decreaseHP(int number){
+        this.hp -= number;
+    }
+    public void increaseHP(int number){
+        this.hp += number;
+    }
+
+    public void resetStats() {
+        this.hp = getMaxHP();
+        this.aim = getAim();
+        this.mobility = getMobility();
+        this.dodge = getDodge();
+        this.hack = getMaxHack();
+        this.will = getWill();
+        this.defense = getDefense();
+        this.armour = getArmour();
+        this.weapon = getWeapon();
+        this.coverType = NONE;
+        this.cover = coverValue.get(this.coverType);
+        this.actionPoints = 2;
+        this.isAlive = true;
+        this.hasTurn = true;
+        this.hunkerBonus = false;
     }
 
     public abstract Integer getDodge();
@@ -58,9 +82,10 @@ public abstract class Entity {
 
     public abstract Integer getWill();
 
-    public abstract Integer getHack();
+    public abstract Integer getMaxHack();
 
-    public abstract Integer getHP();
+    @NotNull
+    public Integer getMaxHP() {return 0;}
 
     public abstract Integer getDefense();
 
@@ -80,17 +105,22 @@ public abstract class Entity {
         this.weapon.reload();
     }
 
-    public final Map<ShotBehaviour, Integer> shotTypeMap = Map.of(
-            MISS, 0,
-            GRAZE, this.weapon.grazedShot(),
-            HIT, this.weapon.normalShot(),
-            CRIT, this.weapon.critShot()
-    );
+    public void applyHunkerBonus() {
+        this.dodge += 30;
+        this.defense += 20;
+    }
+
+    public void removeHunkerBonus() {
+        this.dodge -= 30;
+        this.defense -= 20;
+    }
+
+
 
     public void shootAtTarget(Entity target) {
         int[] aimResults = aimAtTarget(target);
         // doesDodge decreases the shot type from crit->hit->graze->miss
-        boolean doesDodge = false; // always false if entity has a 100% chanceToHit
+        boolean doesDodge = false; // always false if entity has a 100% chanceToHit target
         if (aimResults[2] < 100) {
             doesDodge = GetRandom.intInRange(1, 100) <= target.dodge;
         }
@@ -101,7 +131,7 @@ public abstract class Entity {
         int shotResult = GetRandom.intInRange(1, 100);
         ShotBehaviour shotType = getShotType(shotResult, aimResults, doesCrit, doesDodge);
         if (shotType != MISS) {
-            Integer damage = shotTypeMap.get(shotType);
+            Integer damage = this.weapon.shotTypeMap.get(shotType);
 
             // armour logic
             if (target.armour > 0) {
@@ -131,7 +161,7 @@ public abstract class Entity {
         int GRAZE_CHANCE = 0;
 
         int hitChance = (this.aim + this.weapon.aimBonus) - (target.cover + target.defense);
-        if (hitChance >= 20) { // cannot graze with a hitchance below 20
+        if (hitChance <= 20) { // cannot graze with a hitchance of 20 or below
             GRAZE_CHANCE = 20;
             hitChance -= 10; // half of graze chance is represented by the 10 lowest values of the hitChance
         }
@@ -142,11 +172,11 @@ public abstract class Entity {
 
         for (int i = 0; i < 100; i++) {
             if (i <= missChance) {
-                finalResult[0]++; // miss numbers
+                finalResult[0]++; // miss chance
             } else if (i <= missChance + GRAZE_CHANCE) {
-                finalResult[1]++;// graze numbers
+                finalResult[1]++;// graze chance
             } else {
-                finalResult[2]++; // hit numbers
+                finalResult[2]++; // hit chance
             }
         }
         return finalResult;

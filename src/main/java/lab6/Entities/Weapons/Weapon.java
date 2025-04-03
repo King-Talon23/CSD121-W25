@@ -5,7 +5,12 @@ import lab6.Entities.Weapons.WeaponMods.*;
 import lab6.Utility.GetRandom;
 import lab6.Utility.CycleThrough;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import static lab6.Entities.Weapons.ShotBehaviour.*;
+import static lab6.Entities.Weapons.ShotBehaviour.CRIT;
 
 
 public abstract class Weapon {
@@ -19,7 +24,8 @@ public abstract class Weapon {
     public Integer freeReloads;
     public Integer critChance;
 
-    public List<WeaponMod> weaponMods;
+    public List<WeaponMod> weaponMods = new ArrayList<>();
+
 
     public Weapon(WeaponTier weaponTier) {
         this.weaponTier = weaponTier;
@@ -48,13 +54,23 @@ public abstract class Weapon {
 
     public Integer grazedShot() {
         // half of normal damage inflicted on graze
-        return normalShot() / 2;
+        // minimum 1 damage
+        return Math.max(1, normalShot() / 2);
     }
-
 
     public Integer getMissedShotDamage() {
         // stock provides damage on missed shots
         return CycleThrough.mods(Stock.class, weaponMods);
+    }
+
+    public final Map<ShotBehaviour, Integer> shotTypeMap;
+    {
+        shotTypeMap = Map.of(
+                MISS, getMissedShotDamage(), // 0 unless they have a stock mod
+                GRAZE, grazedShot(),
+                HIT, normalShot(),
+                CRIT, critShot()
+        );
     }
 
     public Integer getTrueClipSize() {
@@ -86,8 +102,6 @@ public abstract class Weapon {
     public abstract Integer getClipSize();
 
     public abstract Integer getCritChance();
-
-    public abstract Integer getPlusOneChance();
 
     public abstract Integer getAimBonus();
 

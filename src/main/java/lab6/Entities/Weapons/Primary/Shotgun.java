@@ -37,6 +37,7 @@ public class Shotgun extends Weapon {
             case MAGNETIC -> 6;
 
             case PLASMA -> 8;
+            case null -> 0;
         };
 
     }
@@ -54,6 +55,7 @@ public class Shotgun extends Weapon {
             case MAGNETIC -> 15;
 
             case PLASMA -> 20;
+            case null -> 0;
         };
     }
 
@@ -65,6 +67,7 @@ public class Shotgun extends Weapon {
             case MAGNETIC -> 4;
 
             case PLASMA -> 5;
+            case null -> 0;
         };
     }
 
@@ -73,10 +76,6 @@ public class Shotgun extends Weapon {
         return 2;
     }
 
-    @Override
-    public Integer getPlusOneChance() {
-        return 0;
-    }
 
     @Override
     public Integer getAimBonus() {

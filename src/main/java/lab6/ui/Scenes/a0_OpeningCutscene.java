@@ -8,10 +8,16 @@ import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.geometry.Pos;
+import lab6.Entities.SoldierStuff.Soldier;
 import lab6.ui.FXMain;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
+import static lab6.Entities.SoldierStuff.SoliderAttributes.ClassType.*;
+import static lab6.Entities.SoldierStuff.SoliderAttributes.ClassType.SHARPSHOOTER;
+import static lab6.Entities.SoldierStuff.SoliderAttributes.Rank.ROOKIE;
 import static lab6.ui.Scenes.a1_MissionBrief.missionBriefing;
 
 public class a0_OpeningCutscene {
@@ -32,36 +38,61 @@ public class a0_OpeningCutscene {
         });
 
         mediaPlayer.setOnError(() -> { // cutscene doesnt load
-
-            //reset mediaPlayer if the video doesnt load properly
-            mediaPlayer.dispose();
-
-            Media newMedia = new Media(stringVideoPath);
-            MediaPlayer newMediaPlayer = new MediaPlayer(newMedia);
-
-            newMediaPlayer.setAutoPlay(true);
-
-            newMediaPlayer.setOnEndOfMedia(() -> {
-                videoOver(newMediaPlayer, primaryStage);
-            });
-
-            mediaView.setMediaPlayer(newMediaPlayer);
+            reloadMedia(mediaPlayer, mediaView, stringVideoPath, primaryStage);
         });
 
-        skipButton.setOnAction(e -> { // cutscene skipped
+        skipButton.setOnAction(actionEvent -> { // cutscene skipped
             videoOver(mediaPlayer, primaryStage);
-            });
+        });
 
         root.setCenter(mediaView);
         root.setBottom(skipButton);
         skipButton.setAlignment(Pos.BOTTOM_CENTER);
         root.setStyle("-fx-background-color: black");
-        return new Scene(root);
+        return new
+
+                Scene(root);
     }
 
-    private static void videoOver( MediaPlayer mediaPlayer, Stage primaryStage) {
+    private static List<Soldier> createSquad() {
+        Soldier specialist = new Soldier(SPECIALIST);
+        Soldier ranger = new Soldier(RANGER);
+        Soldier grenadier = new Soldier(GRENADIER);
+        Soldier sharpShooter = new Soldier(SHARPSHOOTER);
+
+        return new ArrayList<>(List.of(
+                specialist, ranger, grenadier, sharpShooter));
+    }
+
+    private static void videoOver(MediaPlayer mediaPlayer, Stage primaryStage) {
+        /**
+         * setting a new scene on our stage can cause some slight sizing problems between the switch
+         * to get around leaving and reentering fullscreen mode we instead swap the root of the scene instead of he scene itself
+         * this keeps the scene size untouchedSSS
+         */
         mediaPlayer.dispose();
-        BorderPane missionBrief = missionBriefing(primaryStage, null);
-        primaryStage.getScene().setRoot(missionBrief);
+        BorderPane missionBrief = missionBriefing(primaryStage, createSquad(), "First");
+        primaryStage.getScene().setRoot(missionBrief); // replace stage root with the new root
+    }
+
+    private static void reloadMedia(MediaPlayer mediaPlayer, MediaView mediaView, String url, Stage primaryStage) {
+        mediaPlayer.dispose();
+
+        Media newMedia = new Media(url);
+        MediaPlayer newMediaPlayer = new MediaPlayer(newMedia);
+
+        newMediaPlayer.setAutoPlay(true);
+
+        newMediaPlayer.setOnEndOfMedia(() -> {
+                    videoOver(newMediaPlayer, primaryStage);
+                }
+        );
+
+        newMediaPlayer.setOnError(() -> {
+                    reloadMedia(newMediaPlayer, mediaView, url, primaryStage);
+                }
+        );
+
+        mediaView.setMediaPlayer(newMediaPlayer);
     }
 }

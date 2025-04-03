@@ -40,6 +40,7 @@ public class SniperRifle extends Weapon {
             case CONVENTIONAL -> 4;
             case MAGNETIC -> 6;
             case PLASMA -> 8;
+            case null -> 0;
         };
     }
 
@@ -54,17 +55,13 @@ public class SniperRifle extends Weapon {
             case CONVENTIONAL -> 2;
             case MAGNETIC -> 3;
             case PLASMA -> 4;
+            case null -> 0;
         };
     }
 
     @Override
     public Integer getDamageSpread() {
         return 2;
-    }
-
-    @Override
-    public Integer getPlusOneChance() {
-        return 0;
     }
 
     @Override
