@@ -59,17 +59,12 @@ public abstract class Entity {
     public void resetStats() {
         this.hp = getMaxHP();
         this.aim = getAim();
-        this.mobility = getMobility();
         this.dodge = getDodge();
-        this.hack = getMaxHack();
-        this.will = getWill();
         this.defense = getDefense();
         this.armour = getArmour();
-        this.weapon = getWeapon();
         this.coverType = NONE;
         this.cover = coverValue.get(this.coverType);
         this.actionPoints = 2;
-        this.isAlive = true;
         this.hasTurn = true;
         this.hunkerBonus = false;
     }

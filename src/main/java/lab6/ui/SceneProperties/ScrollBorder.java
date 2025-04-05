@@ -37,11 +37,11 @@ public class ScrollBorder {
         text.setWrappingWidth(100);
 
         Timeline timeline = new Timeline(
-                new KeyFrame(Duration.seconds(0.03333), _ -> { // ~30 fps
+                new KeyFrame(Duration.seconds(0.03333), _ -> {
                     String currentText = text.getText();
                     String[] lines = currentText.split("\n");
 
-                    if (lines.length > 85) { // this assumes full screen
+                    if (lines.length > 79) { // this assumes full screen
                         String updatedText = currentText.substring(0, currentText.lastIndexOf('\n'));
                         text.setText(updatedText);
                     }
@@ -64,28 +64,14 @@ public class ScrollBorder {
     }
 
     public enum BorderType {
-        REGULAR, WIN, LOSE, XCOM, ALIEN
+        XCOM, ALIEN
     }
 
     private static String[][] getBorderType(BorderType borderType) {
         return switch (borderType) {
-            case REGULAR -> new String[][]{ // regular
-                    {"//\\/\\\\", "//\\  /\\\\", "<|(> () <)|>", "\\\\/  \\//", "\\\\/\\//"},
-                    {"/  \\", "/ /\\ \\", "\\ \\/ /", "\\  /", "//\\\\"},
-                    {"/  \\", "/ /\\ \\", "(  ()  )", "\\ \\/ /", "\\  /"},
-                    {"\\\\//", "/  \\", "/ /\\ \\", " \\ \\/ /", "\\  /"}
-            };
             /** used this website to complete all borders except regular
              // https://patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20 - font = big money ne
-
-             // The lists and upsidesDowns and backwards because of how the Conveyor Effect loads the strings
              **/
-            case WIN -> new String[][]{ // on player win
-
-            };
-            case LOSE -> new String[][]{ // On player loss
-
-            };
             case XCOM -> new String[][]{ // Player turn
                     {"__/     |__/", "| $$ \\/  | $$", "| $$\\  $ | $$", "| $$  $$$| $$", "| $$ $$/$$ $$",
                             "| $$$$  /$$$$", "| $$$    /$$$", " /$$      /$$"}, // M

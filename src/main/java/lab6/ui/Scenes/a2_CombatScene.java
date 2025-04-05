@@ -19,13 +19,14 @@ import java.util.Arrays;
 import java.util.List;
 
 import static lab6.Entities.SoldierStuff.Cover.*;
+import static lab6.ui.SceneProperties.CombatButtonPanel.combatButtonPanel;
 import static lab6.ui.SceneProperties.HeadingDisplay.heading;
 import static lab6.ui.SceneProperties.ScrollBorder.BorderType.*;
 import static lab6.ui.SceneProperties.ScrollBorder.scrollBorder;
 
 public class a2_CombatScene {
 
-    public static BorderPane combatScene(Stage primaryStage, List<Soldier> squad, List<Alien> enemies) {
+    public static void combatScene(Stage primaryStage, List<Soldier> squad, List<Alien> enemies) {
         BorderPane root = new BorderPane();
         Text leftBorder = scrollBorder(XCOM);
         Text rightBorder = scrollBorder(ALIEN);
@@ -62,13 +63,14 @@ public class a2_CombatScene {
         root.setTop(heading);
 
         root.setStyle("-fx-background-color: black");
-        return root;
+        primaryStage.getScene().setRoot(root);
+
+        playerTurn(root, squad, enemies);
     }
 
-    private void playerTurn(VBox Vbox, BorderPane root, List<Soldier> squad, List<Alien> enemies) {
+    private static void playerTurn(BorderPane root, List<Soldier> squad, List<Alien> enemies) {
         root.setLeft(scrollBorder(XCOM));
         root.setRight(scrollBorder(XCOM));
-        // root.setBottom(Button panel);
         for (Soldier soldier : squad) {
             if (!soldier.isAlive) {
                 squad.remove(soldier);
@@ -77,18 +79,15 @@ public class a2_CombatScene {
             if (soldier.hunkerBonus) {
                 soldier.removeHunkerBonus();
             }
-            soldier.resetActionPoints();
-            if (soldier.hasTurn) {
 
-                soldier.actionPoints--;
-                if (soldier.actionPoints <= 0) {
-                    soldier.hasTurn = false;
-                }
-            }
+            soldier.resetActionPoints();
+            root.setBottom(combatButtonPanel(soldier, enemies));
+            BorderPane.setAlignment(combatButtonPanel(soldier, enemies), Pos.CENTER);
+
         }
     }
 
-    private static String operationName() { // the title for the header
+    private static String operationName() { // title for header
         List<String> adjectives = new ArrayList<>(Arrays.asList(
                 "Radiant", "Luminous", "Serene", "Vibrant", "Zesty", "Bold", "Melancholy", "Fierce",
                 "Majestic", "Whimsical", "Gallant", "Dazzling", "Pristine", "Mysterious", "Jubilant",

@@ -17,7 +17,6 @@ import java.util.List;
 
 import static lab6.Entities.SoldierStuff.SoliderAttributes.ClassType.*;
 import static lab6.Entities.SoldierStuff.SoliderAttributes.ClassType.SHARPSHOOTER;
-import static lab6.Entities.SoldierStuff.SoliderAttributes.Rank.ROOKIE;
 import static lab6.ui.Scenes.a1_MissionBrief.missionBriefing;
 
 public class a0_OpeningCutscene {
@@ -25,6 +24,8 @@ public class a0_OpeningCutscene {
     public static Scene getOpeningScene(Stage primaryStage) {
         BorderPane root = new BorderPane();
         Button skipButton = new Button("Skip Cutscene");
+        skipButton.setStyle("-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 25; -fx-background-color: black; -fx-border-color: white; -fx-border-width: 5");
+        skipButton.setAlignment(Pos.CENTER);
 
         URL videoPath = FXMain.class.getResource("/xcom_opening_final.mp4");
         String stringVideoPath = videoPath.toExternalForm();
@@ -47,7 +48,6 @@ public class a0_OpeningCutscene {
 
         root.setCenter(mediaView);
         root.setBottom(skipButton);
-        skipButton.setAlignment(Pos.BOTTOM_CENTER);
         root.setStyle("-fx-background-color: black");
         return new
 

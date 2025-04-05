@@ -1,47 +1,54 @@
 package lab6.ui.SceneProperties;
 
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.TilePane;
 import lab6.Entities.AlienStuff.Alien;
 import lab6.Entities.SoldierStuff.Cover;
 import lab6.Entities.SoldierStuff.Soldier;
 import lab6.Utility.GetRandom;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static lab6.Entities.SoldierStuff.Cover.*;
 
 public class CombatButtonPanel {
 
-    public static VBox combatButtonPanel(Soldier soldier, List<Alien> enemies) {
-        List<Button> buttonList = List.of(hunkerDown(soldier), move(soldier), reload(soldier), bandageWounds(soldier));
+    public static TilePane combatButtonPanel(Soldier soldier, List<Alien> enemies) {
+        List<Button> buttonList = new ArrayList<>();
         for (Alien alien : enemies) {
-            buttonList.addLast(shootAtTarget(soldier, alien));
+            addShootAtTarget(soldier, alien, buttonList);
         }
-        VBox buttonPanel = new VBox();
-        for (Button button : buttonList) {
-            if (button == null) continue;
-            buttonPanel.getChildren().add(button);
-        }
+        addMove(soldier, buttonList);
+        addHunkerDown(soldier, buttonList);
+        reload(soldier, buttonList);
+        bandageWounds(soldier, buttonList);
+
+        TilePane buttonPanel = new TilePane();
+        buttonPanel.getChildren().addAll(buttonList);
+        buttonPanel.setHgap(10);
+        buttonPanel.setVgap(10);
+        buttonPanel.setPrefColumns(8);
+        buttonPanel.setAlignment(Pos.CENTER);
+
         return buttonPanel;
+
     }
 
-    private static Button hunkerDown(Soldier soldier) {
+    private static void addHunkerDown(Soldier soldier, List<Button> buttonList) {
         if (soldier.coverType.ordinal() > NONE.ordinal()) { // action requires cover
-
             Button hunkerButton = makeStyledButton("Hunker Down");
             hunkerButton.setOnAction(actionEvent -> {
                 soldier.actionPoints = 0;
                 soldier.hunkerBonus = true;
                 soldier.applyHunkerBonus();
             });
-
-            return hunkerButton;
+            buttonList.add(hunkerButton);
         }
-        return null;
     }
 
-    private static Button shootAtTarget(Soldier soldier, Alien alien) {
+    private static void addShootAtTarget(Soldier soldier, Alien alien, List<Button> buttonList) {
         int[] hitChance = soldier.aimAtTarget(alien);
         String buttonText = String.format("Shoot at %s [%s%s]", alien.getName(), '%', hitChance[2]);
 
@@ -49,11 +56,14 @@ public class CombatButtonPanel {
         shootTarget.setOnAction(actionEvent -> {
             soldier.actionPoints = 0;
             soldier.shootAtTarget(alien);
+            if (!alien.isAlive) {
+                shootTarget.getParent().getChildrenUnmodifiable().remove(shootTarget);
+            }
         });
-        return shootTarget;
+        buttonList.add(shootTarget);
     }
 
-    private static Button move(Soldier soldier) {
+    private static void addMove(Soldier soldier, List<Button> buttonList) {
         Button moveButton = makeStyledButton("Move");
         moveButton.getOnMouseDragEntered();
 
@@ -64,10 +74,10 @@ public class CombatButtonPanel {
             System.out.printf("%s -> %s", oldCover, soldier.coverType);
         });
 
-        return moveButton;
+        buttonList.add(moveButton);
     }
 
-    private static Button reload(Soldier soldier) {
+    private static void reload(Soldier soldier, List<Button> buttonList) {
         if (soldier.weapon.ammo < soldier.weapon.clipSize) { // action requires missing ammo
             String buttonText = String.format("Reload [+%sAM]", (soldier.weapon.clipSize - soldier.weapon.ammo));
             Button reloadButton = makeStyledButton(buttonText);
@@ -82,14 +92,11 @@ public class CombatButtonPanel {
                 }
                 soldier.weapon.reload();
             });
-
-            return reloadButton;
-
+            buttonList.add(reloadButton);
         }
-        return null;
     }
 
-    private static Button bandageWounds(Soldier soldier) {
+    private static void bandageWounds(Soldier soldier, List<Button> buttonList) {
         if (soldier.hp < soldier.getMaxHP()) { // action requires missing health
             Button BandageButton = makeStyledButton("Bandage Wounds [+1HP]");
             BandageButton.getOnMouseDragEntered();
@@ -98,42 +105,40 @@ public class CombatButtonPanel {
                 soldier.actionPoints--;
                 soldier.hp++;
             });
-
-            return BandageButton;
-
+            buttonList.add(BandageButton);
         }
-        return null;
     }
 
     private static Button makeStyledButton(String text) {
         Button button = new Button(text);
 
         button.setStyle(
-                "-fx-background-color: linear-gradient(to right, #ff7e5f, #feb47b); " +
-                        "-fx-background-radius: 15; " +
+                "-fx-background-color: linear-gradient(to right, #2193b0, #6dd5ed); " +
+                        "-fx-background-radius: 10; " +
                         "-fx-text-fill: white; " +
-                        "-fx-font-size: 16px; " +
+                        "-fx-font-size: 14px; " +
                         "-fx-font-weight: bold; " +
-                        "-fx-padding: 10 20;"
+                        "-fx-padding: 8 15;"
         );
 
         button.setOnMouseEntered(e -> button.setStyle(
-                "-fx-background-color: linear-gradient(to left, #feb47b, #ff7e5f); " +
-                        "-fx-background-radius: 15; " +
+                "-fx-background-color: linear-gradient(to right, #f857a6, #ff5858); " +
+                        "-fx-background-radius: 10; " +
                         "-fx-text-fill: white; " +
-                        "-fx-font-size: 16px; " +
+                        "-fx-font-size: 14px; " +
                         "-fx-font-weight: bold; " +
-                        "-fx-padding: 10 20;"
+                        "-fx-padding: 8 15;"
         ));
 
         button.setOnMouseExited(e -> button.setStyle(
-                "-fx-background-color: linear-gradient(to right, #ff7e5f, #feb47b); " +
-                        "-fx-background-radius: 15; " +
+                "-fx-background-color: linear-gradient(to right, #2193b0, #6dd5ed); " +
+                        "-fx-background-radius: 10; " +
                         "-fx-text-fill: white; " +
-                        "-fx-font-size: 16px; " +
+                        "-fx-font-size: 14px; " +
                         "-fx-font-weight: bold; " +
-                        "-fx-padding: 10 20;"
+                        "-fx-padding: 8 15;"
         ));
+
         return button;
     }
 }

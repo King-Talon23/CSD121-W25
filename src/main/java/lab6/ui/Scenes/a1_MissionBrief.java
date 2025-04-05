@@ -22,7 +22,7 @@ import java.util.*;
 import static lab6.ui.SceneProperties.HeadingDisplay.heading;
 import static lab6.ui.SceneProperties.ScrollBorder.BorderType.*;
 import static lab6.ui.SceneProperties.ScrollBorder.scrollBorder;
-import static lab6.ui.Scenes.a2_CombatScene.combatScene;
+import static lab6.ui.Scenes.a2_CombatScene.*;
 
 public class a1_MissionBrief {
 
@@ -40,6 +40,7 @@ public class a1_MissionBrief {
         }
 
         Button start = new Button("Start Mission");
+        start.setStyle("-fx-font-weight: bold; -fx-text-fill: white; -fx-font-size: 25; -fx-background-color: black; -fx-border-color: white; -fx-border-width: 5");
         start.setOnAction(e -> {
             if (mediaPlayer != null) {
                 startMission(mediaPlayer, primaryStage, squad, aliens);
@@ -66,6 +67,7 @@ public class a1_MissionBrief {
     }
 
     private static List<Alien> createEnemies() {
+        // this is created in this file to display the amount of enemies
         int amountOfEnemies = GetRandom.intInRange(3, 8);
         List<Alien> enemyGroup = new ArrayList<>();
         for (int i = 0; i < amountOfEnemies; i++) {
@@ -77,10 +79,9 @@ public class a1_MissionBrief {
 
     private static void startMission(MediaPlayer mediaPlayer, Stage primaryStage, List<Soldier> squad, List<Alien> enemies) {
         resetSoldiers(squad);
+        randomizeCover(squad, enemies);
         mediaPlayer.dispose();
-        BorderPane combatScene = combatScene(primaryStage, squad, enemies);
-        primaryStage.getScene().setRoot(combatScene);
-        primaryStage.setFullScreen(true);
+        combatScene(primaryStage, squad, enemies);
     }
 
     private static Text missionDescription(List<Alien> alienInfo) {
@@ -142,6 +143,16 @@ public class a1_MissionBrief {
     private static void resetSoldiers(List<Soldier> squad) {
         for (Soldier soldier : squad) {
             soldier.resetStats();
+        }
+    }
+
+    private static void randomizeCover(List<Soldier> squad, List<Alien> enemies) {
+        // randomize cove for all enemies and squad members on mission start
+        for (Soldier soldier : squad) {
+            soldier.coverType = GetRandom.cover();
+        }
+        for (Soldier soldier : squad) {
+            soldier.coverType = GetRandom.cover();
         }
     }
 

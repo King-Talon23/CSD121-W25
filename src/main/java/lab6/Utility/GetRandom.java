@@ -1,6 +1,5 @@
 package lab6.Utility;
 
-import javafx.scene.control.Button;
 import lab6.Entities.AlienStuff.Alien;
 import lab6.Entities.AlienStuff.Aliens.AdventOfficer;
 
@@ -8,15 +7,13 @@ import java.util.*;
 
 import lab6.Entities.AlienStuff.Aliens.*;
 import lab6.Entities.SoldierStuff.Cover;
-import lab6.Entities.SoldierStuff.Soldier;
 
 import static lab6.Entities.SoldierStuff.Cover.*;
 import static lab6.Entities.SoldierStuff.Cover.FULL;
 
 public class GetRandom {
-    static Random rd = new Random();
-
     public static int intInRange(int min, int max) {
+        Random rd = new Random();
         if (min > max) {
             throw new IllegalArgumentException("Minimum cannot be higher than maximum");
         }
@@ -24,6 +21,7 @@ public class GetRandom {
     }
 
     public static String stringListItem(List<String> list) {
+        Random rd = new Random();
         if (!(list instanceof List<String>)) {
             throw new IllegalArgumentException("Wrong list type");
         }
@@ -39,7 +37,8 @@ public class GetRandom {
     }
 
     public static Cover cover() {
-        Cover[] coverMap = new Cover[]{FLANKED, FLANKED, NONE, NONE, NONE, HALF, HALF, HALF, FULL, FULL};
+         Random rd = new Random();
+        Cover[] coverMap = new Cover[]{FLANKED, NONE, NONE, HALF, HALF, HALF, FULL, FULL};
         return coverMap[rd.nextInt(coverMap.length)];
     }
 }
