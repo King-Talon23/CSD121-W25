@@ -3,6 +3,7 @@ package lab7;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,15 +27,33 @@ public class Main {
         }
     }
 
-    // TODO: implement the searchRecipes method
+    public static List<Recipe> searchRecipes(String searchTerm, DataService dataService) {
+        List<Recipe> matchedRecipes = new ArrayList<>();
+
+        try {
+            List<Recipe> allRecipes = dataService.getRecipes();
+            String lowerTerm = searchTerm.toLowerCase();
+
+            for (Recipe recipe : allRecipes) {
+                if (recipe.name().toLowerCase().contains(lowerTerm) ||
+                        recipe.description().toLowerCase().contains(lowerTerm)) {
+                    matchedRecipes.add(recipe);
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+        }
+
+        return matchedRecipes;
+    }
 
     public static void main(String[] args) {
-        // Here, we INJECT a concrete implementation of the DataService interface
-        // that allows us to get data from an SQLite database
         var quickRecipes = getQuickRecipes(new SqliteDataService());
         System.out.println("Quick Recipes:");
         quickRecipes.forEach(System.out::println);
-
-        // TODO: use your searchRecipes method with a SqliteDataService object
+        var searchResults = searchRecipes("chicken", new SqliteDataService());
+        System.out.println("\nSearch Results for 'chicken':");
+        searchResults.forEach(System.out::println);
     }
+
 }
