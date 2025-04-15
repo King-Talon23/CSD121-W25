@@ -1,10 +1,10 @@
-package tictactoe.game;
+package lab5.game;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static tictactoe.game.PlayerToken.O;
-import static tictactoe.game.PlayerToken.X;
+import static lab5.game.PlayerToken.O;
+import static lab5.game.PlayerToken.X;
 
 /**
  * Represents a TicTacToe game board
@@ -15,6 +15,8 @@ public class Board {
      * Represents the high-level status of the game board
      */
     public static enum Status { InProgress, Draw, XWins, OWins }
+
+
 
     /**
      * The current game board state
@@ -177,7 +179,7 @@ public class Board {
     /**
      * @return A list of all empty positions on the game board
      */
-    public List<Position> getEmptyCells() {
+    public  List<Position> getEmptyCells() {
         var emptyPositions = new ArrayList<Position>();
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {

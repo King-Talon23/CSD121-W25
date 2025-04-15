@@ -1,4 +1,4 @@
-package tictactoe.game;
+package lab5.game;
 
 /**
  * Represents a game board position

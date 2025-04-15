@@ -1,4 +1,4 @@
-package tictactoe.game;
+package lab5.game;
 
 /**
  * Represents the column position of a tictactoe board location
